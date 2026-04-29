@@ -20,17 +20,17 @@ const CONTINENT_REGISTRY = {
 // Each family has an earthy-dark fill tinted toward the family accent,
 // a coastal stroke/glow color, and a highlight for terrain texture.
 const FAMILY_COLORS = {
-  'Funk / Soul':            { fill: '#3a2808', stroke: '#e8840a', hi: '#c8600a' },
-  'Jazz':                   { fill: '#0a1c30', stroke: '#4898d8', hi: '#2870b8' },
-  'Folk, World, & Country': { fill: '#1e2c08', stroke: '#78ba20', hi: '#509810' },
-  'Electronic':             { fill: '#0c0824', stroke: '#8858e8', hi: '#6030c8' },
-  'Reggae':                 { fill: '#042010', stroke: '#18c858', hi: '#0a9840' },
-  'Rock':                   { fill: '#280808', stroke: '#e83838', hi: '#b81818' },
-  'Latin':                  { fill: '#281808', stroke: '#e8a818', hi: '#b88010' },
-  'Hip Hop':                { fill: '#180828', stroke: '#c038e8', hi: '#9018c8' },
-  'Brass & Military':       { fill: '#201e08', stroke: '#d8c010', hi: '#a89808' },
-  'Stage & Screen':         { fill: '#041828', stroke: '#38c8e8', hi: '#1898c8' },
-  'Pop':                    { fill: '#200828', stroke: '#e838b8', hi: '#b81898' },
+  'Funk / Soul':            { fill: '#e8840a', stroke: '#8b5e1a' , hi: '#c8600a' },
+  'Jazz':                   { fill: '#4898d8', stroke: '#1a4a7a' , hi: '#2870b8' },
+  'Folk, World, & Country': { fill: '#78ba20', stroke: '#3a6010' , hi: '#509810' },
+  'Electronic':             { fill: '#8858e8', stroke: '#2a1a6a' , hi: '#6030c8' },
+  'Reggae':                 { fill: '#18c858', stroke: '#0a5a28' , hi: '#0a9840' },
+  'Rock':                   { fill: '#e83838', stroke: '#6a1818' , hi: '#b81818' },
+  'Latin':                  { fill: '#e8a818', stroke: '#7a4a08' , hi: '#b88010' },
+  'Hip Hop':                { fill: '#c038e8', stroke: '#4a1a6a' , hi: '#9018c8' },
+  'Brass & Military':       { fill: '#d8c010', stroke: '#5a5208' , hi: '#a89808' },
+  'Stage & Screen':         { fill: '#38c8e8', stroke: '#084858' , hi: '#1898c8' },
+  'Pop':                    { fill: '#e838b8', stroke: '#5a1858' , hi: '#b81898' },
 };
 const DEFAULT_COLOR = { fill: '#181610', stroke: '#888', hi: '#555' };
 
@@ -149,7 +149,8 @@ const continentGroups = new Map(); // parent_family → <g>
 // ── Init ──────────────────────────────────────────────────────────────────────
 window.initAtlasRenderer = function(svgElement) {
   atlasSvg = svgElement;
-  atlasSvg.setAttribute('viewBox', '0 0 800 600');
+  atlasSvg.setAttribute('viewBox', '-60 -40 920 680');
+  atlasSvg.setAttribute('preserveAspectRatio', 'xMidYMid slice');
 
   const defs = document.createElementNS(SVG_NS, 'defs');
 
@@ -161,9 +162,12 @@ window.initAtlasRenderer = function(svgElement) {
   oceanGrad.setAttribute('gradientUnits', 'userSpaceOnUse');
   oceanGrad.setAttribute('cx', 300); oceanGrad.setAttribute('cy', 220);
   oceanGrad.setAttribute('r', 520);
-  const os1 = mkSvg('stop', { offset: '0%',   'stop-color': '#1e4878' });
-  const os2 = mkSvg('stop', { offset: '55%',  'stop-color': '#0e2848' });
-  const os3 = mkSvg('stop', { offset: '100%', 'stop-color': '#071428' });
+  // const os1 = mkSvg('stop', { offset: '0%',   'stop-color': '#1e4878' });
+  // const os2 = mkSvg('stop', { offset: '55%',  'stop-color': '#0e2848' });
+  // const os3 = mkSvg('stop', { offset: '100%', 'stop-color': '#071428' });
+  const os1 = mkSvg('stop', { offset: '0%',   'stop-color': '#3A92B7ff' });
+  const os2 = mkSvg('stop', { offset: '55%',  'stop-color': '#3A92B7ff' });
+  const os3 = mkSvg('stop', { offset: '100%', 'stop-color': '#3A92B7ff' });
   oceanGrad.append(os1, os2, os3);
   defs.appendChild(oceanGrad);
 
@@ -366,8 +370,8 @@ function updateCities(grp, continent, reg, rx, ry, mode) {
       const dot = mkSvg('circle', {
         class: 'atlas-city-dot',
         cx: dotCx, cy: dotCy, r: 0,
-        fill: '#e8dfc0', 'fill-opacity': 0.92,
-        stroke: '#fff', 'stroke-width': 0.7, 'stroke-opacity': 0.55,
+        fill: '#F2F3F1ff', 'fill-opacity': 0.5,
+        stroke: '#F0D833ff', 'stroke-width': 0.7, 'stroke-opacity': 0.8,
         cursor: 'pointer',
       });
       dot.dataset.baseR        = baseR;
@@ -449,8 +453,8 @@ function appendCityLabel(grp, city, cx, cy, r, dx, dy) {
     'dominant-baseline': 'central',
     'text-anchor': anchor,
     'font-family': "'Jaini', monospace",
-    'font-size': 9.5,
-    fill: '#cec8a8',
+    'font-size': 16,
+    fill: '#355074ff',
   });
   nm.textContent = city.style;
   grp.appendChild(nm);
@@ -460,8 +464,8 @@ function appendCityLabel(grp, city, cx, cy, r, dx, dy) {
     x: lx, y: pctY,
     'text-anchor': anchor,
     'font-family': "'Jaini', monospace",
-    'font-size': 8,
-    fill: '#788868',
+    'font-size': 12,
+    fill: '#355074ff',
   });
   pct.textContent = (city.probability * 100).toFixed(1) + '%';
   grp.appendChild(pct);
