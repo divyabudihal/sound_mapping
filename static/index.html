@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zombie — Fela Kuti Stem Explorer</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+
+<header>
+  <div class="title-block">
+    <h1>Zombie</h1>
+  </div>
+  <p class="artist">Fela Kuti &amp; Africa 70</p>
+  <p class="subtitle">Stem Explorer — AudioShake AI Separation</p>
+</header>
+
+<!-- Setup instructions (shown when stems not yet extracted) -->
+<div id="setup-message" style="display:none">
+  <h2>Stems not found</h2>
+  <p>Run the extractor script first to separate the song into individual stems:</p>
+  <code>python extract_stems.py</code>
+  <p>This uploads to AudioShake and downloads vocals, drums, bass, horns, guitar, and keys. Takes a few minutes. Then:</p>
+  <code>python app.py</code>
+  <p style="margin-top:24px;color:#555">Then refresh this page.</p>
+</div>
+
+<!-- Loading state -->
+<div id="loading-bar" style="display:none">
+  <div class="spinner"></div>
+  <p>Decoding stems&hellip;</p>
+  <p id="loading-status"></p>
+  <div class="load-progress">
+    <div class="load-progress-fill" id="load-progress-fill"></div>
+  </div>
+</div>
+
+<!-- Master controls (hidden until loaded) -->
+<div id="master-controls" style="display:none">
+  <button id="play-btn" title="Play / Pause (Space)">▶</button>
+  <div class="timeline">
+    <div id="progress-bar">
+      <div id="progress-fill"></div>
+    </div>
+    <div class="time-row">
+      <span id="current-time">0:00</span>
+      <span id="total-time">0:00</span>
+    </div>
+  </div>
+</div>
+
+<!-- Stem tracks injected here -->
+<div id="stems-container" style="display:none"></div>
+
+<script src="/static/app.js"></script>
+</body>
+</html>
