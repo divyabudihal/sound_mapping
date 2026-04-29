@@ -1,24 +1,25 @@
 // ── atlas-data.js ─────────────────────────────────────────────────────────────
 // Pure data transform: stem state + analysis JSON → atlas continent/city tree.
-// Preserves full hierarchy: (parent_family, style) tuples are the keys.
+// (parent_family, style) tuples are the unit — hierarchy is never flattened.
 
 const ALL_STEM_IDS = ['vocals', 'drums', 'bass', 'wind', 'guitar', 'keys'];
+const MAX_CITIES   = 12; // global cap across all continents
 
 window.getActiveAtlasData = function(activeStemIds, analysis) {
   const n = activeStemIds.length;
-
   if (n === 0) return null;
 
-  // All 6 stems active → full-mix baseline
+  // All 6 stems active → use full-mix baseline
   if (n === ALL_STEM_IDS.length &&
       ALL_STEM_IDS.every(id => activeStemIds.includes(id)) &&
       analysis.full_mix_classifications && analysis.full_mix_classifications.length) {
     return buildFromFullMix(analysis);
   }
 
-  // Partial selection → average across selected stems
   return buildFromStemAverage(activeStemIds, analysis);
 };
+
+// ─────────────────────────────────────────────────────────────────────────────
 
 function buildFromFullMix(analysis) {
   const parentMap = {};
@@ -26,13 +27,19 @@ function buildFromFullMix(analysis) {
     parentMap[p.parent_family] = p.total_probability;
   }
 
-  const cityMap = {}; // key: "parent|style"
-  for (const c of analysis.full_mix_classifications) {
+  // Take top MAX_CITIES by probability
+  const sorted = [...analysis.full_mix_classifications]
+    .sort((a, b) => b.probability - a.probability)
+    .slice(0, MAX_CITIES);
+
+  const cityMap = {};
+  for (const c of sorted) {
     const key = c.parent_family + '|' + c.style;
     cityMap[key] = {
+      parent_family: c.parent_family,
       style: c.style,
       probability: c.probability,
-      contributing_stems: [], // full mix — no individual stems
+      contributing_stems: [], // full mix — no individual stem attribution
     };
   }
 
@@ -40,56 +47,71 @@ function buildFromFullMix(analysis) {
 }
 
 function buildFromStemAverage(activeStemIds, analysis) {
-  const n = activeStemIds.length;
-
-  // Accumulate city probabilities
-  const cityAcc = {}; // key → { style, parent_family, sum, stems[] }
+  // Accumulate per (parent_family, style) pair.
+  // Divide by stems that HAVE this genre — not by total selected stems.
+  const cityAcc = {};
   for (const stemId of activeStemIds) {
     const entries = (analysis.stem_classifications && analysis.stem_classifications[stemId]) || [];
     for (const e of entries) {
       const key = e.parent_family + '|' + e.style;
       if (!cityAcc[key]) {
-        cityAcc[key] = { style: e.style, parent_family: e.parent_family, sum: 0, stems: [] };
+        cityAcc[key] = { parent_family: e.parent_family, style: e.style, sum: 0, stems: [] };
       }
       cityAcc[key].sum += e.probability;
-      cityAcc[key].stems.push(stemId);
+      if (!cityAcc[key].stems.includes(stemId)) cityAcc[key].stems.push(stemId);
     }
   }
 
-  // Accumulate parent probabilities
-  const parentAcc = {}; // parent_family → sum
+  // Parent totals: divide by stems that have that parent family.
+  const parentAcc   = {};
+  const parentCount = {};
   for (const stemId of activeStemIds) {
     const entries = (analysis.stem_parent_totals && analysis.stem_parent_totals[stemId]) || [];
     for (const e of entries) {
-      parentAcc[e.parent_family] = (parentAcc[e.parent_family] || 0) + e.total_probability;
+      parentAcc[e.parent_family]   = (parentAcc[e.parent_family]   || 0) + e.total_probability;
+      parentCount[e.parent_family] = (parentCount[e.parent_family] || 0) + 1;
     }
   }
 
-  // Average
+  // Build averaged city map
   const cityMap = {};
   for (const [key, acc] of Object.entries(cityAcc)) {
     cityMap[key] = {
-      style: acc.style,
-      probability: acc.sum / n,
-      contributing_stems: acc.stems,
+      parent_family:     acc.parent_family,
+      style:             acc.style,
+      probability:       acc.sum / acc.stems.length, // average over stems that have it
+      contributing_stems: acc.stems.slice(), // deduplicated above
     };
   }
 
-  const parentMap = {};
-  for (const [fam, sum] of Object.entries(parentAcc)) {
-    parentMap[fam] = sum / n;
+  // Global top-12 cap
+  const top12 = new Set(
+    Object.entries(cityMap)
+      .sort((a, b) => b[1].probability - a[1].probability)
+      .slice(0, MAX_CITIES)
+      .map(([key]) => key)
+  );
+  for (const key of Object.keys(cityMap)) {
+    if (!top12.has(key)) delete cityMap[key];
   }
 
-  return assemble('SELECTED STEM AVERAGE', n, parentMap, cityMap);
+  // Average parent totals
+  const parentMap = {};
+  for (const [fam, sum] of Object.entries(parentAcc)) {
+    parentMap[fam] = sum / parentCount[fam];
+  }
+
+  return assemble('SELECTED STEM AVERAGE', activeStemIds.length, parentMap, cityMap);
 }
 
+// ─────────────────────────────────────────────────────────────────────────────
+
 function assemble(mode, stemCount, parentMap, cityMap) {
-  // Group cities by parent_family
+  // Group surviving cities by parent family
   const continentMap = {};
-  for (const [key, city] of Object.entries(cityMap)) {
-    const parent = key.split('|')[0];
-    if (!continentMap[parent]) continentMap[parent] = [];
-    continentMap[parent].push(city);
+  for (const city of Object.values(cityMap)) {
+    if (!continentMap[city.parent_family]) continentMap[city.parent_family] = [];
+    continentMap[city.parent_family].push(city);
   }
 
   const continents = [];
@@ -102,11 +124,9 @@ function assemble(mode, stemCount, parentMap, cityMap) {
       .sort((a, b) => b.probability - a.probability);
 
     if (!filteredCities.length) continue;
-
     continents.push({ parent_family, total_prob, cities: filteredCities });
   }
 
   continents.sort((a, b) => b.total_prob - a.total_prob);
-
   return { mode, stemCount, continents };
 }

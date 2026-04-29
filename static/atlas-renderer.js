@@ -1,222 +1,200 @@
 // ── atlas-renderer.js ─────────────────────────────────────────────────────────
-// SVG continent + city dot rendering with rAF tween engine.
+// SVG atlas: irregular continent blobs + city dots + rAF tween engine.
+// ViewBox: 0 0 800 600
 
+// ── Stable continent positions (800×600 space) ────────────────────────────────
 const CONTINENT_REGISTRY = {
-  'Funk / Soul':            { cx: 120, cy: 210 },
-  'Jazz':                   { cx: 235, cy: 190 },
-  'Folk, World, & Country': { cx: 175, cy:  75 },
-  'Electronic':             { cx: 258, cy: 305 },
-  'Reggae':                 { cx:  82, cy: 318 },
-  'Rock':                   { cx: 295, cy:  88 },
-  'Latin':                  { cx:  58, cy: 178 },
-  'Hip Hop':                { cx: 108, cy:  58 },
-  'Brass & Military':       { cx: 318, cy: 228 },
-  'Stage & Screen':         { cx: 198, cy: 362 },
-  'Pop':                    { cx: 335, cy: 338 },
+  'Funk / Soul':            { cx: 210, cy: 330 },
+  'Jazz':                   { cx: 430, cy: 270 },
+  'Folk, World, & Country': { cx: 295, cy: 125 },
+  'Electronic':             { cx: 590, cy: 390 },
+  'Reggae':                 { cx: 128, cy: 445 },
+  'Rock':                   { cx: 638, cy: 128 },
+  'Latin':                  { cx:  88, cy: 238 },
+  'Hip Hop':                { cx: 188, cy:  85 },
+  'Brass & Military':       { cx: 695, cy: 268 },
+  'Stage & Screen':         { cx: 418, cy: 515 },
+  'Pop':                    { cx: 718, cy: 468 },
 };
 
+// Each family has an earthy-dark fill tinted toward the family accent,
+// a coastal stroke/glow color, and a highlight for terrain texture.
 const FAMILY_COLORS = {
-  'Funk / Soul':            { fill: '#2a1800', stroke: '#ff8c00' },
-  'Jazz':                   { fill: '#001428', stroke: '#44aaff' },
-  'Folk, World, & Country': { fill: '#142000', stroke: '#66cc22' },
-  'Electronic':             { fill: '#08001a', stroke: '#8855ff' },
-  'Reggae':                 { fill: '#001a08', stroke: '#22cc66' },
-  'Rock':                   { fill: '#1e0000', stroke: '#ff4444' },
-  'Latin':                  { fill: '#1e1000', stroke: '#ffaa22' },
-  'Hip Hop':                { fill: '#140014', stroke: '#cc44ff' },
-  'Brass & Military':       { fill: '#1a1800', stroke: '#ddcc22' },
-  'Stage & Screen':         { fill: '#001420', stroke: '#44ccff' },
-  'Pop':                    { fill: '#180018', stroke: '#ff44cc' },
+  'Funk / Soul':            { fill: '#3a2808', stroke: '#e8840a', hi: '#c8600a' },
+  'Jazz':                   { fill: '#0a1c30', stroke: '#4898d8', hi: '#2870b8' },
+  'Folk, World, & Country': { fill: '#1e2c08', stroke: '#78ba20', hi: '#509810' },
+  'Electronic':             { fill: '#0c0824', stroke: '#8858e8', hi: '#6030c8' },
+  'Reggae':                 { fill: '#042010', stroke: '#18c858', hi: '#0a9840' },
+  'Rock':                   { fill: '#280808', stroke: '#e83838', hi: '#b81818' },
+  'Latin':                  { fill: '#281808', stroke: '#e8a818', hi: '#b88010' },
+  'Hip Hop':                { fill: '#180828', stroke: '#c038e8', hi: '#9018c8' },
+  'Brass & Military':       { fill: '#201e08', stroke: '#d8c010', hi: '#a89808' },
+  'Stage & Screen':         { fill: '#041828', stroke: '#38c8e8', hi: '#1898c8' },
+  'Pop':                    { fill: '#200828', stroke: '#e838b8', hi: '#b81898' },
 };
+const DEFAULT_COLOR = { fill: '#181610', stroke: '#888', hi: '#555' };
 
-const STEM_COLORS = {
-  vocals: '#FF6B35', drums: '#FFD700', bass: '#E040FB',
-  wind: '#00E5FF', guitar: '#69F0AE', keys: '#FF4081',
-};
-
-const DEFAULT_COLOR = { fill: '#1a1a1a', stroke: '#666' };
-
-// SVG namespace helper
+// SVG namespace
 const SVG_NS = 'http://www.w3.org/2000/svg';
-function svgEl2(tag, attrs = {}) {
+function mkSvg(tag, attrs = {}) {
   const el = document.createElementNS(SVG_NS, tag);
   for (const [k, v] of Object.entries(attrs)) el.setAttribute(k, v);
   return el;
 }
 
-// ── Deterministic noise for blob shapes ──────────────────────────────────────
+// ── Deterministic noise (returns [-1, 1]) ─────────────────────────────────────
 function strHash(s) {
   let h = 0;
   for (let i = 0; i < s.length; i++) h = (Math.imul(31, h) + s.charCodeAt(i)) | 0;
   return h;
 }
-
 function deterministicNoise(seed, count) {
   let h = strHash(seed);
   const out = [];
   for (let i = 0; i < count; i++) {
     h = (Math.imul(h, 1664525) + 1013904223) | 0;
-    out.push(((h & 0xffff) / 0xffff) * 0.28 - 0.14); // [-0.14, 0.14]
+    out.push(((h & 0xffff) / 0xffff) * 2 - 1);
   }
   return out;
 }
 
-// Build a smooth closed SVG path through noise-perturbed ellipse points
+// ── Organic continent blob via Catmull-Rom ────────────────────────────────────
+// 14 control points, radius ±42%, angle ±42° — produces realistic coastlines.
 function buildBlobPath(cx, cy, rx, ry, seed) {
-  const n = 7;
-  const noiseR = deterministicNoise(seed + 'r', n);
-  const noiseA = deterministicNoise(seed + 'a', n);
+  const N     = 14;
+  const noiseR = deterministicNoise(seed + '_r', N);
+  const noiseA = deterministicNoise(seed + '_a', N);
 
   const pts = [];
-  for (let i = 0; i < n; i++) {
-    const base = (i / n) * Math.PI * 2;
-    const angle = base + noiseA[i] * 0.3;
-    const r_scale = 1 + noiseR[i];
+  for (let i = 0; i < N; i++) {
+    const base  = (i / N) * Math.PI * 2;
+    const angle = base + noiseA[i] * 0.42; // ±~24°
+    const rScale = 1 + noiseR[i] * 0.42;   // ±42%
     pts.push({
-      x: cx + rx * r_scale * Math.cos(angle),
-      y: cy + ry * r_scale * Math.sin(angle),
+      x: cx + rx * rScale * Math.cos(angle),
+      y: cy + ry * rScale * Math.sin(angle),
     });
   }
 
-  // Catmull-Rom → cubic bezier, closed
+  // Catmull-Rom → cubic bezier (closed)
   const d = [];
-  for (let i = 0; i < n; i++) {
-    const p0 = pts[(i - 1 + n) % n];
+  for (let i = 0; i < N; i++) {
+    const p0 = pts[(i - 1 + N) % N];
     const p1 = pts[i];
-    const p2 = pts[(i + 1) % n];
-    const p3 = pts[(i + 2) % n];
+    const p2 = pts[(i + 1) % N];
+    const p3 = pts[(i + 2) % N];
     const cp1x = p1.x + (p2.x - p0.x) / 6;
     const cp1y = p1.y + (p2.y - p0.y) / 6;
     const cp2x = p2.x - (p3.x - p1.x) / 6;
     const cp2y = p2.y - (p3.y - p1.y) / 6;
-    if (i === 0) d.push(`M ${p1.x.toFixed(2)} ${p1.y.toFixed(2)}`);
-    d.push(`C ${cp1x.toFixed(2)} ${cp1y.toFixed(2)}, ${cp2x.toFixed(2)} ${cp2y.toFixed(2)}, ${p2.x.toFixed(2)} ${p2.y.toFixed(2)}`);
+    if (i === 0) d.push(`M ${p1.x.toFixed(1)} ${p1.y.toFixed(1)}`);
+    d.push(`C ${cp1x.toFixed(1)} ${cp1y.toFixed(1)}, ${cp2x.toFixed(1)} ${cp2y.toFixed(1)}, ${p2.x.toFixed(1)} ${p2.y.toFixed(1)}`);
   }
   d.push('Z');
   return d.join(' ');
 }
 
-// ── Continent sizing ──────────────────────────────────────────────────────────
-function probToRx(p) { return 22 + Math.min(1, p) * 44; }
-function probToRy(p) { return 15 + Math.min(1, p) * 30; }
+// ── Continent sizing (for 800×600 canvas) ────────────────────────────────────
+function probToRx(p) { return 42 + Math.min(1, p) * 70; } // 42–112
+function probToRy(p) { return 28 + Math.min(1, p) * 50; } // 28–78
 
-// ── City dot layout within a continent ───────────────────────────────────────
+// ── City dot layout: golden-angle sunflower ───────────────────────────────────
+// Starts away from center (min r ≈ 55%) so continent label stays clear.
 function cityPositions(count, rx, ry) {
-  const cr = Math.min(rx, ry) * 0.52;
-  const raw = [];
-
-  if (count === 1) {
-    raw.push([0, 0]);
-  } else if (count === 2) {
-    raw.push([-cr * 0.38, 0], [cr * 0.38, 0]);
-  } else if (count === 3) {
-    for (let i = 0; i < 3; i++) {
-      const a = (i / 3) * Math.PI * 2 - Math.PI / 2;
-      raw.push([Math.cos(a) * cr * 0.44, Math.sin(a) * cr * 0.44]);
-    }
-  } else if (count === 4) {
-    for (let i = 0; i < 4; i++) {
-      const a = (i / 4) * Math.PI * 2 + Math.PI / 4;
-      raw.push([Math.cos(a) * cr * 0.44, Math.sin(a) * cr * 0.44]);
-    }
-  } else if (count === 5) {
-    raw.push([0, 0]);
-    for (let i = 0; i < 4; i++) {
-      const a = (i / 4) * Math.PI * 2 - Math.PI / 2;
-      raw.push([Math.cos(a) * cr * 0.5, Math.sin(a) * cr * 0.5]);
-    }
-  } else {
-    // Hexagonal ring for 6+
-    const inner = Math.min(3, count - 3);
-    const outer = count - inner;
-    for (let i = 0; i < inner; i++) {
-      const a = (i / inner) * Math.PI * 2;
-      raw.push([Math.cos(a) * cr * 0.25, Math.sin(a) * cr * 0.25]);
-    }
-    for (let i = 0; i < outer; i++) {
-      const a = (i / outer) * Math.PI * 2 - Math.PI / 6;
-      raw.push([Math.cos(a) * cr * 0.54, Math.sin(a) * cr * 0.54]);
-    }
+  if (count === 1) return [[rx * 0.28, 0]]; // slight offset from center
+  const PHI = Math.PI * (3 - Math.sqrt(5)); // golden angle ≈ 137.5°
+  const spreadX = rx * 0.68;
+  const spreadY = ry * 0.62;
+  const pts = [];
+  for (let i = 0; i < count; i++) {
+    const r     = Math.sqrt((i + 0.6) / (count + 0.6)); // 0.55–1.0 range
+    const angle = PHI * i;
+    pts.push([r * spreadX * Math.cos(angle), r * spreadY * Math.sin(angle)]);
   }
-
-  // Scale offsets by actual continent aspect
-  return raw.map(([dx, dy]) => [dx * (rx / 50), dy * (ry / 35)]);
+  return pts;
 }
 
 function dotBaseR(prob, maxProb) {
-  return 3.5 + (prob / (maxProb || 1)) * 4;
+  return 5 + (prob / (maxProb || 1)) * 5; // 5–10 px in 800×600 space
 }
 
-// ── rAF tween engine ─────────────────────────────────────────────────────────
+// ── rAF tween engine (for SVG geometry attributes) ───────────────────────────
 const tweens = new Map();
 let tweenRafId = null;
 
 function tweenAttr(el, prop, target, duration = 480) {
-  const key = (el._atlasId || (el._atlasId = Math.random().toString(36).slice(2))) + prop;
-  const current = parseFloat(el.getAttribute(prop) || 0);
-  tweens.set(key, { el, prop, from: current, target, duration, startTime: null });
+  const uid = (el._atid || (el._atid = Math.random().toString(36).slice(2))) + prop;
+  tweens.set(uid, {
+    el, prop, target, duration, startTime: null,
+    from: parseFloat(el.getAttribute(prop) || 0),
+  });
   if (!tweenRafId) tweenRafId = requestAnimationFrame(processTweens);
 }
 
 function processTweens(ts) {
-  for (const [key, tw] of tweens) {
+  for (const [k, tw] of tweens) {
     if (!tw.startTime) tw.startTime = ts;
     const t = Math.min(1, (ts - tw.startTime) / tw.duration);
-    const e = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t; // ease-in-out quad
+    const e = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
     tw.el.setAttribute(tw.prop, (tw.from + (tw.target - tw.from) * e).toFixed(3));
-    if (t >= 1) tweens.delete(key);
+    if (t >= 1) tweens.delete(k);
   }
-  tweenRafId = tweens.size > 0 ? requestAnimationFrame(processTweens) : null;
+  tweenRafId = tweens.size ? requestAnimationFrame(processTweens) : null;
 }
 
-// ── DOM state ─────────────────────────────────────────────────────────────────
+// ── Module state ──────────────────────────────────────────────────────────────
 let atlasSvg = null;
 const continentGroups = new Map(); // parent_family → <g>
 
+// ── Init ──────────────────────────────────────────────────────────────────────
 window.initAtlasRenderer = function(svgElement) {
   atlasSvg = svgElement;
+  atlasSvg.setAttribute('viewBox', '0 0 800 600');
 
-  // Ocean background gradient
-  const defEl = document.createElementNS(SVG_NS, 'defs');
-  const grad = document.createElementNS(SVG_NS, 'radialGradient');
-  grad.id = 'atlas-ocean-grad';
-  grad.setAttribute('cx', '50%'); grad.setAttribute('cy', '45%');
-  grad.setAttribute('r', '60%');
-  const s1 = document.createElementNS(SVG_NS, 'stop');
-  s1.setAttribute('offset', '0%'); s1.setAttribute('stop-color', '#0d1a22');
-  const s2 = document.createElementNS(SVG_NS, 'stop');
-  s2.setAttribute('offset', '100%'); s2.setAttribute('stop-color', '#080c10');
-  grad.appendChild(s1); grad.appendChild(s2);
-  defEl.appendChild(grad);
-  atlasSvg.appendChild(defEl);
+  const defs = document.createElementNS(SVG_NS, 'defs');
 
-  // Ocean rect
-  const ocean = svgEl2('rect', { x: 0, y: 0, width: 360, height: 400,
-    fill: 'url(#atlas-ocean-grad)' });
-  atlasSvg.appendChild(ocean);
+  // Radial gradient for ocean depth
+  const oceanGrad = mkSvg('radialGradient', {
+    id: 'ocean-depth', cx: '38%', cy: '36%', r: '72%',
+    gradientUnits: 'userSpaceOnUse',
+  });
+  oceanGrad.setAttribute('gradientUnits', 'userSpaceOnUse');
+  oceanGrad.setAttribute('cx', 300); oceanGrad.setAttribute('cy', 220);
+  oceanGrad.setAttribute('r', 520);
+  const os1 = mkSvg('stop', { offset: '0%',   'stop-color': '#1e4878' });
+  const os2 = mkSvg('stop', { offset: '55%',  'stop-color': '#0e2848' });
+  const os3 = mkSvg('stop', { offset: '100%', 'stop-color': '#071428' });
+  oceanGrad.append(os1, os2, os3);
+  defs.appendChild(oceanGrad);
 
-  // Subtle grid lines for depth
-  const grid = svgEl2('g', { opacity: '0.06' });
-  for (let x = 0; x <= 360; x += 40) {
-    grid.appendChild(svgEl2('line', { x1: x, y1: 0, x2: x, y2: 400,
-      stroke: '#4488aa', 'stroke-width': 0.5 }));
-  }
-  for (let y = 0; y <= 400; y += 40) {
-    grid.appendChild(svgEl2('line', { x1: 0, y1: y, x2: 360, y2: y,
-      stroke: '#4488aa', 'stroke-width': 0.5 }));
-  }
-  atlasSvg.appendChild(grid);
+  // Repeating wave pattern overlay
+  const wave = mkSvg('pattern', {
+    id: 'ocean-wave', x: 0, y: 0, width: 80, height: 24,
+    patternUnits: 'userSpaceOnUse',
+  });
+  const waveLine = mkSvg('path', {
+    d: 'M 0 12 Q 20 6 40 12 Q 60 18 80 12',
+    stroke: 'rgba(255,255,255,0.05)',
+    'stroke-width': 1, fill: 'none',
+  });
+  wave.appendChild(waveLine);
+  defs.appendChild(wave);
+
+  atlasSvg.appendChild(defs);
+
+  // Ocean layers
+  atlasSvg.appendChild(mkSvg('rect', { x: 0, y: 0, width: 800, height: 600, fill: 'url(#ocean-depth)' }));
+  atlasSvg.appendChild(mkSvg('rect', { x: 0, y: 0, width: 800, height: 600, fill: 'url(#ocean-wave)' }));
 };
 
-// ── Empty / null state ────────────────────────────────────────────────────────
+// ── Empty state ───────────────────────────────────────────────────────────────
 let emptyOverlay = null;
-
 function showEmptyState() {
   if (!emptyOverlay) {
-    emptyOverlay = svgEl2('text', {
-      x: 180, y: 200, 'text-anchor': 'middle',
-      fill: '#2a2a2a', 'font-family': "'SF Mono', monospace",
-      'font-size': 11, 'letter-spacing': 2,
+    emptyOverlay = mkSvg('text', {
+      x: 400, y: 305, 'text-anchor': 'middle',
+      fill: '#1e3858', 'font-family': "'SF Mono', monospace",
+      'font-size': 18, 'letter-spacing': 4,
     });
     emptyOverlay.textContent = 'NO STEMS ACTIVE';
     atlasSvg.appendChild(emptyOverlay);
@@ -224,7 +202,6 @@ function showEmptyState() {
   emptyOverlay.style.display = '';
   continentGroups.forEach(g => { g.style.opacity = 0; });
 }
-
 function hideEmptyState() {
   if (emptyOverlay) emptyOverlay.style.display = 'none';
 }
@@ -233,214 +210,193 @@ function hideEmptyState() {
 window.renderAtlas = function(data) {
   if (!atlasSvg) return;
 
-  // Update status bar
   const modeEl = document.getElementById('atlas-mode-label');
   const stemEl = document.getElementById('atlas-stem-count');
   if (modeEl) modeEl.textContent = data ? data.mode : '—';
   if (stemEl) stemEl.textContent = data ? data.stemCount + (data.stemCount === 1 ? ' STEM' : ' STEMS') : '0 STEMS';
 
-  if (!data) {
-    showEmptyState();
-    return;
-  }
+  if (!data) { showEmptyState(); return; }
   hideEmptyState();
 
   const activeFamilies = new Set(data.continents.map(c => c.parent_family));
 
-  // Remove stale continents
+  // Fade out + remove stale continents
   for (const [fam, grp] of continentGroups) {
     if (!activeFamilies.has(fam)) {
       grp.style.transition = 'opacity 0.5s';
       grp.style.opacity = 0;
-      setTimeout(() => { if (grp.parentNode) grp.parentNode.removeChild(grp); }, 520);
+      setTimeout(() => grp.parentNode && grp.parentNode.removeChild(grp), 520);
       continentGroups.delete(fam);
     }
   }
 
-  // Upsert continents
-  for (const continent of data.continents) {
-    upsertContinent(continent, data.mode);
-  }
+  for (const continent of data.continents) upsertContinent(continent, data.mode);
 };
 
+// ── Continent upsert ──────────────────────────────────────────────────────────
 function upsertContinent(continent, mode) {
   const { parent_family, total_prob, cities } = continent;
-  const reg = CONTINENT_REGISTRY[parent_family] || { cx: 180, cy: 200 };
+  const reg = CONTINENT_REGISTRY[parent_family] || { cx: 400, cy: 300 };
   const col = FAMILY_COLORS[parent_family] || DEFAULT_COLOR;
-  const rx = probToRx(total_prob);
-  const ry = probToRy(total_prob);
+  const rx  = probToRx(total_prob);
+  const ry  = probToRy(total_prob);
 
   let grp = continentGroups.get(parent_family);
 
   if (!grp) {
-    // Create new continent group
-    grp = svgEl2('g', { class: 'atlas-continent', opacity: 0 });
+    grp = mkSvg('g', { class: 'atlas-continent', opacity: 0 });
     grp.dataset.family = parent_family;
 
-    // Blob (organic shape background)
-    const blob = svgEl2('path', {
-      class: 'continent-blob',
+    // ① Main land blob
+    grp.appendChild(mkSvg('path', {
+      class: 'continent-land',
       d: buildBlobPath(reg.cx, reg.cy, rx, ry, parent_family),
-      fill: col.stroke,
-      'fill-opacity': 0.07,
-      stroke: 'none',
-    });
-    grp.appendChild(blob);
+      fill: col.fill, 'fill-opacity': 0.97,
+    }));
 
-    // Base ellipse
-    const ell = svgEl2('ellipse', {
-      class: 'continent-body',
-      cx: reg.cx, cy: reg.cy,
-      rx, ry,
-      fill: col.fill,
-      'fill-opacity': 0.9,
-      stroke: col.stroke,
-      'stroke-width': 1.2,
-      'stroke-opacity': 0.7,
-    });
-    grp.appendChild(ell);
-
-    // Shoreline shimmer (inner ellipse)
-    const shore = svgEl2('ellipse', {
-      class: 'continent-shore',
-      cx: reg.cx, cy: reg.cy,
-      rx: rx * 0.88, ry: ry * 0.88,
+    // ② Coastal glow — slightly bigger path, same seed
+    grp.appendChild(mkSvg('path', {
+      class: 'continent-coast',
+      d: buildBlobPath(reg.cx, reg.cy, rx * 1.06, ry * 1.06, parent_family),
       fill: 'none',
-      stroke: col.stroke,
-      'stroke-width': 0.4,
-      'stroke-opacity': 0.25,
-    });
-    grp.appendChild(shore);
+      stroke: col.stroke, 'stroke-width': 1.8, 'stroke-opacity': 0.55,
+    }));
 
-    // Label
-    const label = svgEl2('text', {
+    // ③ Inner shoreline ring
+    grp.appendChild(mkSvg('path', {
+      class: 'continent-shore',
+      d: buildBlobPath(reg.cx, reg.cy, rx * 0.90, ry * 0.90, parent_family + '_s'),
+      fill: 'none',
+      stroke: col.hi, 'stroke-width': 0.6, 'stroke-opacity': 0.2,
+    }));
+
+    // ④ Terrain highlight blob (offset, lighter)
+    grp.appendChild(mkSvg('path', {
+      class: 'continent-terrain',
+      d: buildBlobPath(reg.cx - rx * 0.10, reg.cy - ry * 0.12, rx * 0.52, ry * 0.50, parent_family + '_h'),
+      fill: col.hi, 'fill-opacity': 0.08,
+    }));
+
+    // ⑤ Continent label — cartographic style, inside the land mass
+    const lbl = mkSvg('text', {
       class: 'atlas-continent-label',
-      x: reg.cx,
-      y: reg.cy + ry + 11,
-      'text-anchor': 'middle',
+      x: reg.cx, y: reg.cy,
+      'text-anchor': 'middle', 'dominant-baseline': 'middle',
     });
-    label.textContent = parent_family.toUpperCase();
-    grp.appendChild(label);
+    lbl.textContent = parent_family.toUpperCase();
+    grp.appendChild(lbl);
 
-    // Cities container
-    const citiesG = svgEl2('g', { class: 'continent-cities' });
-    grp.appendChild(citiesG);
+    // ⑥ Cities container
+    grp.appendChild(mkSvg('g', { class: 'continent-cities' }));
 
     atlasSvg.appendChild(grp);
     continentGroups.set(parent_family, grp);
 
-    // Fade in
+    // Fade in after one frame so CSS transition fires
     requestAnimationFrame(() => {
       grp.style.transition = 'opacity 0.5s';
       grp.style.opacity = 1;
     });
   } else {
-    // Update existing ellipse + blob size
-    const ell = grp.querySelector('.continent-body');
-    const blob = grp.querySelector('.continent-blob');
-    const shore = grp.querySelector('.continent-shore');
-    const label = grp.querySelector('.atlas-continent-label');
-
-    if (ell) { tweenAttr(ell, 'rx', rx); tweenAttr(ell, 'ry', ry); }
-    if (blob) blob.setAttribute('d', buildBlobPath(reg.cx, reg.cy, rx, ry, parent_family));
-    if (shore) { tweenAttr(shore, 'rx', rx * 0.88); tweenAttr(shore, 'ry', ry * 0.88); }
-    if (label) label.setAttribute('y', reg.cy + ry + 11);
+    // Update blob paths for new size
+    const paths = {
+      '.continent-land':    [rx,        ry,        parent_family],
+      '.continent-coast':   [rx * 1.06, ry * 1.06, parent_family],
+      '.continent-shore':   [rx * 0.90, ry * 0.90, parent_family + '_s'],
+      '.continent-terrain': [rx * 0.52, ry * 0.50, parent_family + '_h', -rx * 0.10, -ry * 0.12],
+    };
+    for (const [sel, args] of Object.entries(paths)) {
+      const el = grp.querySelector(sel);
+      if (!el) continue;
+      const [erx, ery, seed, dxOff = 0, dyOff = 0] = args;
+      el.setAttribute('d', buildBlobPath(reg.cx + dxOff, reg.cy + dyOff, erx, ery, seed));
+    }
     grp.style.opacity = 1;
   }
 
-  // Update city dots
   updateCities(grp, continent, reg, rx, ry, mode);
 }
 
+// ── City dots ─────────────────────────────────────────────────────────────────
 function updateCities(grp, continent, reg, rx, ry, mode) {
   const citiesG = grp.querySelector('.continent-cities');
   if (!citiesG) return;
 
   const { cities, parent_family } = continent;
-  const existingDots = new Map();
-  citiesG.querySelectorAll('.atlas-city-group').forEach(cg => {
-    existingDots.set(cg.dataset.key, cg);
-  });
+  const existingMap = new Map();
+  citiesG.querySelectorAll('.atlas-city-group').forEach(cg => existingMap.set(cg.dataset.key, cg));
 
-  const positions = cityPositions(cities.length, rx, ry);
-  const maxProb = cities[0]?.probability || 1;
-  const activeFamilyKeys = new Set(cities.map(c => parent_family + '|' + c.style));
+  const positions    = cityPositions(cities.length, rx, ry);
+  const maxProb      = cities[0]?.probability || 1;
+  const activeKeys   = new Set(cities.map(c => parent_family + '|' + c.style));
 
-  // Remove stale dots
-  for (const [key, dotGrp] of existingDots) {
-    if (!activeFamilyKeys.has(key)) {
-      const circle = dotGrp.querySelector('circle');
-      if (circle) {
-        tweenAttr(circle, 'r', 0);
-        setTimeout(() => { if (dotGrp.parentNode) dotGrp.parentNode.removeChild(dotGrp); }, 500);
-      }
-      existingDots.delete(key);
+  // Remove stale dots (fade r to 0 then detach)
+  for (const [key, dotGrp] of existingMap) {
+    if (!activeKeys.has(key)) {
+      const circle = dotGrp.querySelector('circle.atlas-city-dot');
+      if (circle) { tweenAttr(circle, 'r', 0); }
+      setTimeout(() => dotGrp.parentNode && dotGrp.parentNode.removeChild(dotGrp), 500);
+      existingMap.delete(key);
     }
   }
 
   cities.forEach((city, i) => {
-    const key = parent_family + '|' + city.style;
-    const [dx, dy] = positions[i] || [0, 0];
-    const cx = reg.cx + dx;
-    const cy = reg.cy + dy;
-    const baseR = dotBaseR(city.probability, maxProb);
-    const showLabel = i < 4;
+    const key          = parent_family + '|' + city.style;
+    const [dx, dy]     = positions[i] || [0, 0];
+    const dotCx        = reg.cx + dx;
+    const dotCy        = reg.cy + dy;
+    const baseR        = dotBaseR(city.probability, maxProb);
+    const phaseOff     = ((i / Math.max(cities.length, 1)) * 0.5).toFixed(4);
 
-    let cityGrp = existingDots.get(key);
+    let cityGrp = existingMap.get(key);
 
     if (!cityGrp) {
-      cityGrp = svgEl2('g', { class: 'atlas-city-group' });
-      cityGrp.dataset.key = key;
-      cityGrp.dataset.phaseOffset = ((i / Math.max(cities.length, 1)) * 0.5).toFixed(4);
+      cityGrp = mkSvg('g', { class: 'atlas-city-group' });
+      cityGrp.dataset.key         = key;
+      cityGrp.dataset.phaseOffset = phaseOff;
 
-      // Glow ring (pulsed separately by pulse engine)
-      const glow = svgEl2('circle', {
+      // Glow halo
+      cityGrp.appendChild(mkSvg('circle', {
         class: 'atlas-city-glow',
-        cx, cy, r: baseR * 1.8,
-        fill: 'none',
-        stroke: dotColor(city, mode),
-        'stroke-width': 0.8,
-        opacity: 0.3,
-      });
-      cityGrp.appendChild(glow);
+        cx: dotCx, cy: dotCy, r: baseR * 1.85,
+        fill: 'none', stroke: 'rgba(255,255,255,0.18)', 'stroke-width': 0.8,
+      }));
 
-      // Main dot
-      const dot = svgEl2('circle', {
+      // City dot — cream/parchment colour, map aesthetic
+      const dot = mkSvg('circle', {
         class: 'atlas-city-dot',
-        cx, cy, r: 0,
-        fill: dotColor(city, mode),
-        'fill-opacity': 0.9,
-        stroke: '#fff',
-        'stroke-width': 0.4,
-        'stroke-opacity': 0.4,
+        cx: dotCx, cy: dotCy, r: 0,
+        fill: '#e8dfc0', 'fill-opacity': 0.92,
+        stroke: '#fff', 'stroke-width': 0.7, 'stroke-opacity': 0.55,
         cursor: 'pointer',
       });
-      dot.dataset.baseR = baseR;
-      dot.dataset.phaseOffset = cityGrp.dataset.phaseOffset;
+      dot.dataset.baseR        = baseR;
+      dot.dataset.phaseOffset  = phaseOff;
       cityGrp.appendChild(dot);
 
-      if (showLabel) appendCityLabel(cityGrp, city, cx, cy, baseR);
+      // Label — placed radially away from continent center
+      appendCityLabel(cityGrp, city, dotCx, dotCy, baseR, dx, dy);
 
-      // Hover / click
+      // Hover / click events
       cityGrp.addEventListener('mouseenter', () => {
+        cityGrp.querySelector('.atlas-city-dot')?.setAttribute('fill', '#ffffff');
         window.showAtlasDetail && window.showAtlasDetail({
           parent_family, style: city.style,
           probability: city.probability,
           contributing_stems: city.contributing_stems,
         });
-        cityGrp.querySelector('.atlas-city-dot')?.setAttribute('stroke-opacity', 1);
       });
       cityGrp.addEventListener('mouseleave', () => {
         if (!cityGrp.dataset.pinned) {
+          cityGrp.querySelector('.atlas-city-dot')?.setAttribute('fill', '#e8dfc0');
           window.hideAtlasDetail && window.hideAtlasDetail();
-          cityGrp.querySelector('.atlas-city-dot')?.setAttribute('stroke-opacity', 0.4);
         }
       });
-      cityGrp.addEventListener('click', () => {
-        // Unpin all others
+      cityGrp.addEventListener('click', e => {
+        e.stopPropagation();
         atlasSvg.querySelectorAll('.atlas-city-group[data-pinned]').forEach(g => {
           delete g.dataset.pinned;
-          g.querySelector('.atlas-city-dot')?.setAttribute('stroke-opacity', 0.4);
+          g.querySelector('.atlas-city-dot')?.setAttribute('fill', '#e8dfc0');
         });
         cityGrp.dataset.pinned = '1';
         window.showAtlasDetail && window.showAtlasDetail({
@@ -454,79 +410,71 @@ function updateCities(grp, continent, reg, rx, ry, mode) {
       tweenAttr(dot, 'r', baseR);
     } else {
       // Update existing dot
-      const dot = cityGrp.querySelector('.atlas-city-dot');
+      const dot  = cityGrp.querySelector('.atlas-city-dot');
       const glow = cityGrp.querySelector('.atlas-city-glow');
       if (dot) {
         dot.dataset.baseR = baseR;
-        dot.setAttribute('fill', dotColor(city, mode));
-        tweenAttr(dot, 'r', baseR);
-        tweenAttr(dot, 'cx', cx);
-        tweenAttr(dot, 'cy', cy);
+        tweenAttr(dot, 'cx', dotCx); tweenAttr(dot, 'cy', dotCy); tweenAttr(dot, 'r', baseR);
       }
       if (glow) {
-        glow.setAttribute('cx', cx); glow.setAttribute('cy', cy);
-        glow.setAttribute('stroke', dotColor(city, mode));
-        tweenAttr(glow, 'r', baseR * 1.8);
+        tweenAttr(glow, 'cx', dotCx); tweenAttr(glow, 'cy', dotCy);
+        tweenAttr(glow, 'r', baseR * 1.85);
       }
-      // Update label if present
-      updateCityLabel(cityGrp, city, cx, cy, baseR, showLabel);
+      updateCityLabel(cityGrp, city, dotCx, dotCy, baseR, dx, dy);
     }
   });
 }
 
-function dotColor(city, mode) {
-  if (mode === 'FULL MIX DNA') return '#e8e8e8';
-  // Color by first contributing stem
-  const s = city.contributing_stems && city.contributing_stems[0];
-  return (s && STEM_COLORS[s]) || '#e8e8e8';
+// ── Label placement (radially outward from continent center) ──────────────────
+function radialLabelPos(dotCx, dotCy, baseR, dx, dy) {
+  const len  = Math.sqrt(dx * dx + dy * dy) || 1;
+  const nx   = Math.abs(dx) < 1 && Math.abs(dy) < 1 ? 1  : dx / len;
+  const ny   = Math.abs(dx) < 1 && Math.abs(dy) < 1 ? 0  : dy / len;
+  const off  = baseR + 8;
+  return {
+    lx:     dotCx + nx * off,
+    ly:     dotCy + ny * off,
+    anchor: nx >= 0 ? 'start' : 'end',
+    nameY:  dotCy + ny * off,
+    pctY:   dotCy + ny * off + 12,
+  };
 }
 
-function appendCityLabel(grp, city, cx, cy, r) {
-  const labelX = cx + r + 5;
-  const anchor = labelX > 300 ? 'end' : 'start';
-  const lx = anchor === 'end' ? cx - r - 5 : labelX;
+function appendCityLabel(grp, city, cx, cy, r, dx, dy) {
+  const { lx, anchor, nameY, pctY } = radialLabelPos(cx, cy, r, dx, dy);
 
-  const name = svgEl2('text', {
+  const nm = mkSvg('text', {
     class: 'atlas-city-label',
-    x: lx, y: cy - 1,
+    x: lx, y: nameY,
+    'dominant-baseline': 'central',
     'text-anchor': anchor,
     'font-family': "'SF Mono', monospace",
-    'font-size': 7.5,
-    fill: '#bbb',
+    'font-size': 9.5,
+    fill: '#cec8a8',
   });
-  name.textContent = city.style;
-  grp.appendChild(name);
+  nm.textContent = city.style;
+  grp.appendChild(nm);
 
-  const pct = svgEl2('text', {
+  const pct = mkSvg('text', {
     class: 'atlas-city-sublabel',
-    x: lx, y: cy + 8,
+    x: lx, y: pctY,
     'text-anchor': anchor,
     'font-family': "'SF Mono', monospace",
-    'font-size': 6.5,
-    fill: '#555',
+    'font-size': 8,
+    fill: '#788868',
   });
   pct.textContent = (city.probability * 100).toFixed(1) + '%';
   grp.appendChild(pct);
 }
 
-function updateCityLabel(grp, city, cx, cy, r, showLabel) {
-  const existing = grp.querySelectorAll('.atlas-city-label, .atlas-city-sublabel');
-  if (!showLabel) { existing.forEach(el => el.remove()); return; }
-  if (existing.length === 0) { appendCityLabel(grp, city, cx, cy, r); return; }
+function updateCityLabel(grp, city, cx, cy, r, dx, dy) {
+  const nm  = grp.querySelector('.atlas-city-label');
+  const pct = grp.querySelector('.atlas-city-sublabel');
+  if (!nm || !pct) return;
 
-  const labelX = cx + r + 5;
-  const anchor = labelX > 300 ? 'end' : 'start';
-  const lx = anchor === 'end' ? cx - r - 5 : labelX;
-
-  existing.forEach(el => {
-    el.setAttribute('x', lx);
-    el.setAttribute('text-anchor', anchor);
-    if (el.classList.contains('atlas-city-label')) {
-      el.setAttribute('y', cy - 1);
-      el.textContent = city.style;
-    } else {
-      el.setAttribute('y', cy + 8);
-      el.textContent = (city.probability * 100).toFixed(1) + '%';
-    }
-  });
+  const { lx, anchor, nameY, pctY } = radialLabelPos(cx, cy, r, dx, dy);
+  nm.setAttribute('x', lx);  nm.setAttribute('y', nameY);  nm.setAttribute('text-anchor', anchor);
+  nm.textContent = city.style;
+  pct.setAttribute('x', lx); pct.setAttribute('y', pctY);  pct.setAttribute('text-anchor', anchor);
+  pct.textContent = (city.probability * 100).toFixed(1) + '%';
 }
