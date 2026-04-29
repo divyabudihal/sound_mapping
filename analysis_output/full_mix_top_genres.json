@@ -1,0 +1,282 @@
+{
+  "file": "zombie.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Funk / Soul---Afrobeat",
+      "parent_family": "Funk / Soul",
+      "style": "Afrobeat",
+      "parent_key": "funk / soul",
+      "style_key": "afrobeat",
+      "combined_key": "funk / soul---afrobeat",
+      "probability": 0.34781816601753235,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Afrobeat",
+      "parent_family": "Jazz",
+      "style": "Afrobeat",
+      "parent_key": "jazz",
+      "style_key": "afrobeat",
+      "combined_key": "jazz---afrobeat",
+      "probability": 0.3192940652370453,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.22755280137062073,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---African",
+      "parent_family": "Folk, World, & Country",
+      "style": "African",
+      "parent_key": "folk, world, & country",
+      "style_key": "african",
+      "combined_key": "folk, world, & country---african",
+      "probability": 0.14671845734119415,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Disco",
+      "parent_family": "Funk / Soul",
+      "style": "Disco",
+      "parent_key": "funk / soul",
+      "style_key": "disco",
+      "combined_key": "funk / soul---disco",
+      "probability": 0.08925172686576843,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Highlife",
+      "parent_family": "Folk, World, & Country",
+      "style": "Highlife",
+      "parent_key": "folk, world, & country",
+      "style_key": "highlife",
+      "combined_key": "folk, world, & country---highlife",
+      "probability": 0.07332019507884979,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Jazz-Funk",
+      "parent_family": "Jazz",
+      "style": "Jazz-Funk",
+      "parent_key": "jazz",
+      "style_key": "jazz-funk",
+      "combined_key": "jazz---jazz-funk",
+      "probability": 0.06749226152896881,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.05177189037203789,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Reggae---Soca",
+      "parent_family": "Reggae",
+      "style": "Soca",
+      "parent_key": "reggae",
+      "style_key": "soca",
+      "combined_key": "reggae---soca",
+      "probability": 0.047347065061330795,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Disco",
+      "parent_family": "Electronic",
+      "style": "Disco",
+      "parent_key": "electronic",
+      "style_key": "disco",
+      "combined_key": "electronic---disco",
+      "probability": 0.04260799288749695,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Jazzdance",
+      "parent_family": "Electronic",
+      "style": "Jazzdance",
+      "parent_key": "electronic",
+      "style_key": "jazzdance",
+      "combined_key": "electronic---jazzdance",
+      "probability": 0.029461724683642387,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Soul",
+      "parent_family": "Funk / Soul",
+      "style": "Soul",
+      "parent_key": "funk / soul",
+      "style_key": "soul",
+      "combined_key": "funk / soul---soul",
+      "probability": 0.029176542535424232,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "Afrobeat",
+      "total_probability": 0.6671122312545776,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.34781816601753235
+        },
+        {
+          "parent_family": "Jazz",
+          "probability": 0.3192940652370453
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.22755280137062073,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.22755280137062073
+        }
+      ]
+    },
+    {
+      "style": "African",
+      "total_probability": 0.14671845734119415,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.14671845734119415
+        }
+      ]
+    },
+    {
+      "style": "Disco",
+      "total_probability": 0.13185971975326538,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.08925172686576843
+        },
+        {
+          "parent_family": "Electronic",
+          "probability": 0.04260799288749695
+        }
+      ]
+    },
+    {
+      "style": "Highlife",
+      "total_probability": 0.07332019507884979,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.07332019507884979
+        }
+      ]
+    },
+    {
+      "style": "Jazz-Funk",
+      "total_probability": 0.06749226152896881,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.06749226152896881
+        }
+      ]
+    },
+    {
+      "style": "House",
+      "total_probability": 0.05177189037203789,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.05177189037203789
+        }
+      ]
+    },
+    {
+      "style": "Soca",
+      "total_probability": 0.047347065061330795,
+      "parent_breakdown": [
+        {
+          "parent_family": "Reggae",
+          "probability": 0.047347065061330795
+        }
+      ]
+    },
+    {
+      "style": "Jazzdance",
+      "total_probability": 0.029461724683642387,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.029461724683642387
+        }
+      ]
+    },
+    {
+      "style": "Soul",
+      "total_probability": 0.029176542535424232,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.029176542535424232
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.6937992367893457
+    },
+    {
+      "parent_family": "Jazz",
+      "total_probability": 0.3867863267660141
+    },
+    {
+      "parent_family": "Folk, World, & Country",
+      "total_probability": 0.22003865242004395
+    },
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.12384160794317722
+    },
+    {
+      "parent_family": "Reggae",
+      "total_probability": 0.047347065061330795
+    }
+  ],
+  "region_scores": []
+}

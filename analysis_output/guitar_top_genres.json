@@ -1,0 +1,303 @@
+{
+  "stem": "guitar",
+  "file": "stems/guitar.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.06993988901376724,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Hillbilly",
+      "parent_family": "Folk, World, & Country",
+      "style": "Hillbilly",
+      "parent_key": "folk, world, & country",
+      "style_key": "hillbilly",
+      "combined_key": "folk, world, & country---hillbilly",
+      "probability": 0.055894989520311356,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Pop---Bollywood",
+      "parent_family": "Pop",
+      "style": "Bollywood",
+      "parent_key": "pop",
+      "style_key": "bollywood",
+      "combined_key": "pop---bollywood",
+      "probability": 0.050497692078351974,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Stage & Screen---Soundtrack",
+      "parent_family": "Stage & Screen",
+      "style": "Soundtrack",
+      "parent_key": "stage & screen",
+      "style_key": "soundtrack",
+      "combined_key": "stage & screen---soundtrack",
+      "probability": 0.04764215275645256,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Folk",
+      "parent_family": "Folk, World, & Country",
+      "style": "Folk",
+      "parent_key": "folk, world, & country",
+      "style_key": "folk",
+      "combined_key": "folk, world, & country---folk",
+      "probability": 0.042609285563230515,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Country",
+      "parent_family": "Folk, World, & Country",
+      "style": "Country",
+      "parent_key": "folk, world, & country",
+      "style_key": "country",
+      "combined_key": "folk, world, & country---country",
+      "probability": 0.042213499546051025,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Hindustani",
+      "parent_family": "Folk, World, & Country",
+      "style": "Hindustani",
+      "parent_key": "folk, world, & country",
+      "style_key": "hindustani",
+      "combined_key": "folk, world, & country---hindustani",
+      "probability": 0.038525234907865524,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Swing",
+      "parent_family": "Jazz",
+      "style": "Swing",
+      "parent_key": "jazz",
+      "style_key": "swing",
+      "combined_key": "jazz---swing",
+      "probability": 0.03772563114762306,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.03756290674209595,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Dixieland",
+      "parent_family": "Jazz",
+      "style": "Dixieland",
+      "parent_key": "jazz",
+      "style_key": "dixieland",
+      "combined_key": "jazz---dixieland",
+      "probability": 0.02397467941045761,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Reggae---Reggae",
+      "parent_family": "Reggae",
+      "style": "Reggae",
+      "parent_key": "reggae",
+      "style_key": "reggae",
+      "combined_key": "reggae---reggae",
+      "probability": 0.022091837599873543,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Disco",
+      "parent_family": "Funk / Soul",
+      "style": "Disco",
+      "parent_key": "funk / soul",
+      "style_key": "disco",
+      "combined_key": "funk / soul---disco",
+      "probability": 0.020583439618349075,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "House",
+      "total_probability": 0.06993988901376724,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.06993988901376724
+        }
+      ]
+    },
+    {
+      "style": "Hillbilly",
+      "total_probability": 0.055894989520311356,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.055894989520311356
+        }
+      ]
+    },
+    {
+      "style": "Bollywood",
+      "total_probability": 0.050497692078351974,
+      "parent_breakdown": [
+        {
+          "parent_family": "Pop",
+          "probability": 0.050497692078351974
+        }
+      ]
+    },
+    {
+      "style": "Soundtrack",
+      "total_probability": 0.04764215275645256,
+      "parent_breakdown": [
+        {
+          "parent_family": "Stage & Screen",
+          "probability": 0.04764215275645256
+        }
+      ]
+    },
+    {
+      "style": "Folk",
+      "total_probability": 0.042609285563230515,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.042609285563230515
+        }
+      ]
+    },
+    {
+      "style": "Country",
+      "total_probability": 0.042213499546051025,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.042213499546051025
+        }
+      ]
+    },
+    {
+      "style": "Hindustani",
+      "total_probability": 0.038525234907865524,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.038525234907865524
+        }
+      ]
+    },
+    {
+      "style": "Swing",
+      "total_probability": 0.03772563114762306,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.03772563114762306
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.03756290674209595,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.03756290674209595
+        }
+      ]
+    },
+    {
+      "style": "Dixieland",
+      "total_probability": 0.02397467941045761,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.02397467941045761
+        }
+      ]
+    },
+    {
+      "style": "Reggae",
+      "total_probability": 0.022091837599873543,
+      "parent_breakdown": [
+        {
+          "parent_family": "Reggae",
+          "probability": 0.022091837599873543
+        }
+      ]
+    },
+    {
+      "style": "Disco",
+      "total_probability": 0.020583439618349075,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.020583439618349075
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Folk, World, & Country",
+      "total_probability": 0.17924300953745842
+    },
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.06993988901376724
+    },
+    {
+      "parent_family": "Jazz",
+      "total_probability": 0.06170031055808067
+    },
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.05814634636044502
+    },
+    {
+      "parent_family": "Pop",
+      "total_probability": 0.050497692078351974
+    },
+    {
+      "parent_family": "Stage & Screen",
+      "total_probability": 0.04764215275645256
+    },
+    {
+      "parent_family": "Reggae",
+      "total_probability": 0.022091837599873543
+    }
+  ],
+  "region_scores": []
+}

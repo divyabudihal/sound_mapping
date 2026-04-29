@@ -1,0 +1,283 @@
+{
+  "stem": "bass",
+  "file": "stems/bass.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.2542976438999176,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Deep House",
+      "parent_family": "Electronic",
+      "style": "Deep House",
+      "parent_key": "electronic",
+      "style_key": "deep house",
+      "combined_key": "electronic---deep house",
+      "probability": 0.12334522604942322,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Techno",
+      "parent_family": "Electronic",
+      "style": "Techno",
+      "parent_key": "electronic",
+      "style_key": "techno",
+      "combined_key": "electronic---techno",
+      "probability": 0.059157583862543106,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Garage House",
+      "parent_family": "Electronic",
+      "style": "Garage House",
+      "parent_key": "electronic",
+      "style_key": "garage house",
+      "combined_key": "electronic---garage house",
+      "probability": 0.05401644483208656,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Experimental",
+      "parent_family": "Electronic",
+      "style": "Experimental",
+      "parent_key": "electronic",
+      "style_key": "experimental",
+      "combined_key": "electronic---experimental",
+      "probability": 0.043160226196050644,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.0375533327460289,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Speed Garage",
+      "parent_family": "Electronic",
+      "style": "Speed Garage",
+      "parent_key": "electronic",
+      "style_key": "speed garage",
+      "combined_key": "electronic---speed garage",
+      "probability": 0.03556175157427788,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Tribal House",
+      "parent_family": "Electronic",
+      "style": "Tribal House",
+      "parent_key": "electronic",
+      "style_key": "tribal house",
+      "combined_key": "electronic---tribal house",
+      "probability": 0.035274822264909744,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Downtempo",
+      "parent_family": "Electronic",
+      "style": "Downtempo",
+      "parent_key": "electronic",
+      "style_key": "downtempo",
+      "combined_key": "electronic---downtempo",
+      "probability": 0.033585142344236374,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Tech House",
+      "parent_family": "Electronic",
+      "style": "Tech House",
+      "parent_key": "electronic",
+      "style_key": "tech house",
+      "combined_key": "electronic---tech house",
+      "probability": 0.031064119189977646,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Acid House",
+      "parent_family": "Electronic",
+      "style": "Acid House",
+      "parent_key": "electronic",
+      "style_key": "acid house",
+      "combined_key": "electronic---acid house",
+      "probability": 0.029983459040522575,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Electro",
+      "parent_family": "Electronic",
+      "style": "Electro",
+      "parent_key": "electronic",
+      "style_key": "electro",
+      "combined_key": "electronic---electro",
+      "probability": 0.02840273268520832,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "House",
+      "total_probability": 0.2542976438999176,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.2542976438999176
+        }
+      ]
+    },
+    {
+      "style": "Deep House",
+      "total_probability": 0.12334522604942322,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.12334522604942322
+        }
+      ]
+    },
+    {
+      "style": "Techno",
+      "total_probability": 0.059157583862543106,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.059157583862543106
+        }
+      ]
+    },
+    {
+      "style": "Garage House",
+      "total_probability": 0.05401644483208656,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.05401644483208656
+        }
+      ]
+    },
+    {
+      "style": "Experimental",
+      "total_probability": 0.043160226196050644,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.043160226196050644
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.0375533327460289,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.0375533327460289
+        }
+      ]
+    },
+    {
+      "style": "Speed Garage",
+      "total_probability": 0.03556175157427788,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.03556175157427788
+        }
+      ]
+    },
+    {
+      "style": "Tribal House",
+      "total_probability": 0.035274822264909744,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.035274822264909744
+        }
+      ]
+    },
+    {
+      "style": "Downtempo",
+      "total_probability": 0.033585142344236374,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.033585142344236374
+        }
+      ]
+    },
+    {
+      "style": "Tech House",
+      "total_probability": 0.031064119189977646,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.031064119189977646
+        }
+      ]
+    },
+    {
+      "style": "Acid House",
+      "total_probability": 0.029983459040522575,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.029983459040522575
+        }
+      ]
+    },
+    {
+      "style": "Electro",
+      "total_probability": 0.02840273268520832,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.02840273268520832
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.7278491519391537
+    },
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.0375533327460289
+    }
+  ],
+  "region_scores": []
+}

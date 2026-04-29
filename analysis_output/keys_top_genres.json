@@ -1,0 +1,291 @@
+{
+  "stem": "keys",
+  "file": "stems/keys.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Electronic---Experimental",
+      "parent_family": "Electronic",
+      "style": "Experimental",
+      "parent_key": "electronic",
+      "style_key": "experimental",
+      "combined_key": "electronic---experimental",
+      "probability": 0.046444833278656006,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.033089779317379,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Ambient",
+      "parent_family": "Electronic",
+      "style": "Ambient",
+      "parent_key": "electronic",
+      "style_key": "ambient",
+      "combined_key": "electronic---ambient",
+      "probability": 0.03249375894665718,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Rock---Punk",
+      "parent_family": "Rock",
+      "style": "Punk",
+      "parent_key": "rock",
+      "style_key": "punk",
+      "combined_key": "rock---punk",
+      "probability": 0.025393832474946976,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Techno",
+      "parent_family": "Electronic",
+      "style": "Techno",
+      "parent_key": "electronic",
+      "style_key": "techno",
+      "combined_key": "electronic---techno",
+      "probability": 0.02457766979932785,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Synth-pop",
+      "parent_family": "Electronic",
+      "style": "Synth-pop",
+      "parent_key": "electronic",
+      "style_key": "synth-pop",
+      "combined_key": "electronic---synth-pop",
+      "probability": 0.023812122642993927,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Folk",
+      "parent_family": "Folk, World, & Country",
+      "style": "Folk",
+      "parent_key": "folk, world, & country",
+      "style_key": "folk",
+      "combined_key": "folk, world, & country---folk",
+      "probability": 0.022487660869956017,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Stage & Screen---Soundtrack",
+      "parent_family": "Stage & Screen",
+      "style": "Soundtrack",
+      "parent_key": "stage & screen",
+      "style_key": "soundtrack",
+      "combined_key": "stage & screen---soundtrack",
+      "probability": 0.02201656997203827,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Electro",
+      "parent_family": "Electronic",
+      "style": "Electro",
+      "parent_key": "electronic",
+      "style_key": "electro",
+      "combined_key": "electronic---electro",
+      "probability": 0.02145353890955448,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Downtempo",
+      "parent_family": "Electronic",
+      "style": "Downtempo",
+      "parent_key": "electronic",
+      "style_key": "downtempo",
+      "combined_key": "electronic---downtempo",
+      "probability": 0.020748864859342575,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Rock---Alternative Rock",
+      "parent_family": "Rock",
+      "style": "Alternative Rock",
+      "parent_key": "rock",
+      "style_key": "alternative rock",
+      "combined_key": "rock---alternative rock",
+      "probability": 0.01998274028301239,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Rock---Folk Rock",
+      "parent_family": "Rock",
+      "style": "Folk Rock",
+      "parent_key": "rock",
+      "style_key": "folk rock",
+      "combined_key": "rock---folk rock",
+      "probability": 0.019377917051315308,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "Experimental",
+      "total_probability": 0.046444833278656006,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.046444833278656006
+        }
+      ]
+    },
+    {
+      "style": "House",
+      "total_probability": 0.033089779317379,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.033089779317379
+        }
+      ]
+    },
+    {
+      "style": "Ambient",
+      "total_probability": 0.03249375894665718,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.03249375894665718
+        }
+      ]
+    },
+    {
+      "style": "Punk",
+      "total_probability": 0.025393832474946976,
+      "parent_breakdown": [
+        {
+          "parent_family": "Rock",
+          "probability": 0.025393832474946976
+        }
+      ]
+    },
+    {
+      "style": "Techno",
+      "total_probability": 0.02457766979932785,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.02457766979932785
+        }
+      ]
+    },
+    {
+      "style": "Synth-pop",
+      "total_probability": 0.023812122642993927,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.023812122642993927
+        }
+      ]
+    },
+    {
+      "style": "Folk",
+      "total_probability": 0.022487660869956017,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.022487660869956017
+        }
+      ]
+    },
+    {
+      "style": "Soundtrack",
+      "total_probability": 0.02201656997203827,
+      "parent_breakdown": [
+        {
+          "parent_family": "Stage & Screen",
+          "probability": 0.02201656997203827
+        }
+      ]
+    },
+    {
+      "style": "Electro",
+      "total_probability": 0.02145353890955448,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.02145353890955448
+        }
+      ]
+    },
+    {
+      "style": "Downtempo",
+      "total_probability": 0.020748864859342575,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.020748864859342575
+        }
+      ]
+    },
+    {
+      "style": "Alternative Rock",
+      "total_probability": 0.01998274028301239,
+      "parent_breakdown": [
+        {
+          "parent_family": "Rock",
+          "probability": 0.01998274028301239
+        }
+      ]
+    },
+    {
+      "style": "Folk Rock",
+      "total_probability": 0.019377917051315308,
+      "parent_breakdown": [
+        {
+          "parent_family": "Rock",
+          "probability": 0.019377917051315308
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.20262056775391102
+    },
+    {
+      "parent_family": "Rock",
+      "total_probability": 0.06475448980927467
+    },
+    {
+      "parent_family": "Folk, World, & Country",
+      "total_probability": 0.022487660869956017
+    },
+    {
+      "parent_family": "Stage & Screen",
+      "total_probability": 0.02201656997203827
+    }
+  ],
+  "region_scores": []
+}

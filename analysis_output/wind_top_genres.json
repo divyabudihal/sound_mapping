@@ -1,0 +1,295 @@
+{
+  "stem": "wind",
+  "file": "stems/wind.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Jazz---Free Jazz",
+      "parent_family": "Jazz",
+      "style": "Free Jazz",
+      "parent_key": "jazz",
+      "style_key": "free jazz",
+      "combined_key": "jazz---free jazz",
+      "probability": 0.0678284540772438,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Avant-garde Jazz",
+      "parent_family": "Jazz",
+      "style": "Avant-garde Jazz",
+      "parent_key": "jazz",
+      "style_key": "avant-garde jazz",
+      "combined_key": "jazz---avant-garde jazz",
+      "probability": 0.05065549537539482,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Free Improvisation",
+      "parent_family": "Jazz",
+      "style": "Free Improvisation",
+      "parent_key": "jazz",
+      "style_key": "free improvisation",
+      "combined_key": "jazz---free improvisation",
+      "probability": 0.05007285997271538,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Dixieland",
+      "parent_family": "Jazz",
+      "style": "Dixieland",
+      "parent_key": "jazz",
+      "style_key": "dixieland",
+      "combined_key": "jazz---dixieland",
+      "probability": 0.04815220087766647,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Brass & Military---Brass Band",
+      "parent_family": "Brass & Military",
+      "style": "Brass Band",
+      "parent_key": "brass & military",
+      "style_key": "brass band",
+      "combined_key": "brass & military---brass band",
+      "probability": 0.04016868770122528,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Folk",
+      "parent_family": "Folk, World, & Country",
+      "style": "Folk",
+      "parent_key": "folk, world, & country",
+      "style_key": "folk",
+      "combined_key": "folk, world, & country---folk",
+      "probability": 0.03790290281176567,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Ragtime",
+      "parent_family": "Jazz",
+      "style": "Ragtime",
+      "parent_key": "jazz",
+      "style_key": "ragtime",
+      "combined_key": "jazz---ragtime",
+      "probability": 0.03695160150527954,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Free Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Free Funk",
+      "parent_key": "funk / soul",
+      "style_key": "free funk",
+      "combined_key": "funk / soul---free funk",
+      "probability": 0.03613773360848427,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Contemporary Jazz",
+      "parent_family": "Jazz",
+      "style": "Contemporary Jazz",
+      "parent_key": "jazz",
+      "style_key": "contemporary jazz",
+      "combined_key": "jazz---contemporary jazz",
+      "probability": 0.03232395648956299,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Jazz---Swing",
+      "parent_family": "Jazz",
+      "style": "Swing",
+      "parent_key": "jazz",
+      "style_key": "swing",
+      "combined_key": "jazz---swing",
+      "probability": 0.024950332939624786,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Experimental",
+      "parent_family": "Electronic",
+      "style": "Experimental",
+      "parent_key": "electronic",
+      "style_key": "experimental",
+      "combined_key": "electronic---experimental",
+      "probability": 0.022410031408071518,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.02181757241487503,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "Free Jazz",
+      "total_probability": 0.0678284540772438,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.0678284540772438
+        }
+      ]
+    },
+    {
+      "style": "Avant-garde Jazz",
+      "total_probability": 0.05065549537539482,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.05065549537539482
+        }
+      ]
+    },
+    {
+      "style": "Free Improvisation",
+      "total_probability": 0.05007285997271538,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.05007285997271538
+        }
+      ]
+    },
+    {
+      "style": "Dixieland",
+      "total_probability": 0.04815220087766647,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.04815220087766647
+        }
+      ]
+    },
+    {
+      "style": "Brass Band",
+      "total_probability": 0.04016868770122528,
+      "parent_breakdown": [
+        {
+          "parent_family": "Brass & Military",
+          "probability": 0.04016868770122528
+        }
+      ]
+    },
+    {
+      "style": "Folk",
+      "total_probability": 0.03790290281176567,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.03790290281176567
+        }
+      ]
+    },
+    {
+      "style": "Ragtime",
+      "total_probability": 0.03695160150527954,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.03695160150527954
+        }
+      ]
+    },
+    {
+      "style": "Free Funk",
+      "total_probability": 0.03613773360848427,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.03613773360848427
+        }
+      ]
+    },
+    {
+      "style": "Contemporary Jazz",
+      "total_probability": 0.03232395648956299,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.03232395648956299
+        }
+      ]
+    },
+    {
+      "style": "Swing",
+      "total_probability": 0.024950332939624786,
+      "parent_breakdown": [
+        {
+          "parent_family": "Jazz",
+          "probability": 0.024950332939624786
+        }
+      ]
+    },
+    {
+      "style": "Experimental",
+      "total_probability": 0.022410031408071518,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.022410031408071518
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.02181757241487503,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.02181757241487503
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Jazz",
+      "total_probability": 0.3109349012374878
+    },
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.0579553060233593
+    },
+    {
+      "parent_family": "Brass & Military",
+      "total_probability": 0.04016868770122528
+    },
+    {
+      "parent_family": "Folk, World, & Country",
+      "total_probability": 0.03790290281176567
+    },
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.022410031408071518
+    }
+  ],
+  "region_scores": []
+}

@@ -2,6 +2,7 @@
 """Flask server for the Zombie stem explorer."""
 
 import os
+import json
 from flask import Flask, send_from_directory, jsonify
 
 app = Flask(__name__, static_folder='static')
@@ -35,6 +36,15 @@ def api_stems():
         path = os.path.join(STEMS_DIR, f'{m}.mp3')
         sizes[m] = os.path.getsize(path)
     return jsonify({'stems': available, 'sizes': sizes})
+
+
+ANALYSIS_FILE = os.path.join(SCRIPT_DIR, 'analysis_output', 'song_analysis_for_app.json')
+
+
+@app.route('/api/analysis')
+def api_analysis():
+    with open(ANALYSIS_FILE, 'r') as f:
+        return jsonify(json.load(f))
 
 
 if __name__ == '__main__':

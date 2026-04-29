@@ -1,0 +1,299 @@
+{
+  "stem": "vocals",
+  "file": "stems/vocals.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.03209374099969864,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Experimental",
+      "parent_family": "Electronic",
+      "style": "Experimental",
+      "parent_key": "electronic",
+      "style_key": "experimental",
+      "combined_key": "electronic---experimental",
+      "probability": 0.03012537583708763,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Rock---Punk",
+      "parent_family": "Rock",
+      "style": "Punk",
+      "parent_key": "rock",
+      "style_key": "punk",
+      "combined_key": "rock---punk",
+      "probability": 0.02910369262099266,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Latin---Cubano",
+      "parent_family": "Latin",
+      "style": "Cubano",
+      "parent_key": "latin",
+      "style_key": "cubano",
+      "combined_key": "latin---cubano",
+      "probability": 0.027234576642513275,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Hip Hop---Grime",
+      "parent_family": "Hip Hop",
+      "style": "Grime",
+      "parent_key": "hip hop",
+      "style_key": "grime",
+      "combined_key": "hip hop---grime",
+      "probability": 0.026671739295125008,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Folk, World, & Country---Folk",
+      "parent_family": "Folk, World, & Country",
+      "style": "Folk",
+      "parent_key": "folk, world, & country",
+      "style_key": "folk",
+      "combined_key": "folk, world, & country---folk",
+      "probability": 0.025110352784395218,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Latin---Batucada",
+      "parent_family": "Latin",
+      "style": "Batucada",
+      "parent_key": "latin",
+      "style_key": "batucada",
+      "combined_key": "latin---batucada",
+      "probability": 0.022474125027656555,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Techno",
+      "parent_family": "Electronic",
+      "style": "Techno",
+      "parent_key": "electronic",
+      "style_key": "techno",
+      "combined_key": "electronic---techno",
+      "probability": 0.019697628915309906,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Synth-pop",
+      "parent_family": "Electronic",
+      "style": "Synth-pop",
+      "parent_key": "electronic",
+      "style_key": "synth-pop",
+      "combined_key": "electronic---synth-pop",
+      "probability": 0.019440792500972748,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Electro",
+      "parent_family": "Electronic",
+      "style": "Electro",
+      "parent_key": "electronic",
+      "style_key": "electro",
+      "combined_key": "electronic---electro",
+      "probability": 0.019155260175466537,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Rock---Alternative Rock",
+      "parent_family": "Rock",
+      "style": "Alternative Rock",
+      "parent_key": "rock",
+      "style_key": "alternative rock",
+      "combined_key": "rock---alternative rock",
+      "probability": 0.019097620621323586,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.01826479658484459,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "House",
+      "total_probability": 0.03209374099969864,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.03209374099969864
+        }
+      ]
+    },
+    {
+      "style": "Experimental",
+      "total_probability": 0.03012537583708763,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.03012537583708763
+        }
+      ]
+    },
+    {
+      "style": "Punk",
+      "total_probability": 0.02910369262099266,
+      "parent_breakdown": [
+        {
+          "parent_family": "Rock",
+          "probability": 0.02910369262099266
+        }
+      ]
+    },
+    {
+      "style": "Cubano",
+      "total_probability": 0.027234576642513275,
+      "parent_breakdown": [
+        {
+          "parent_family": "Latin",
+          "probability": 0.027234576642513275
+        }
+      ]
+    },
+    {
+      "style": "Grime",
+      "total_probability": 0.026671739295125008,
+      "parent_breakdown": [
+        {
+          "parent_family": "Hip Hop",
+          "probability": 0.026671739295125008
+        }
+      ]
+    },
+    {
+      "style": "Folk",
+      "total_probability": 0.025110352784395218,
+      "parent_breakdown": [
+        {
+          "parent_family": "Folk, World, & Country",
+          "probability": 0.025110352784395218
+        }
+      ]
+    },
+    {
+      "style": "Batucada",
+      "total_probability": 0.022474125027656555,
+      "parent_breakdown": [
+        {
+          "parent_family": "Latin",
+          "probability": 0.022474125027656555
+        }
+      ]
+    },
+    {
+      "style": "Techno",
+      "total_probability": 0.019697628915309906,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.019697628915309906
+        }
+      ]
+    },
+    {
+      "style": "Synth-pop",
+      "total_probability": 0.019440792500972748,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.019440792500972748
+        }
+      ]
+    },
+    {
+      "style": "Electro",
+      "total_probability": 0.019155260175466537,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.019155260175466537
+        }
+      ]
+    },
+    {
+      "style": "Alternative Rock",
+      "total_probability": 0.019097620621323586,
+      "parent_breakdown": [
+        {
+          "parent_family": "Rock",
+          "probability": 0.019097620621323586
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.01826479658484459,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.01826479658484459
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.12051279842853546
+    },
+    {
+      "parent_family": "Latin",
+      "total_probability": 0.04970870167016983
+    },
+    {
+      "parent_family": "Rock",
+      "total_probability": 0.048201313242316246
+    },
+    {
+      "parent_family": "Hip Hop",
+      "total_probability": 0.026671739295125008
+    },
+    {
+      "parent_family": "Folk, World, & Country",
+      "total_probability": 0.025110352784395218
+    },
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.01826479658484459
+    }
+  ],
+  "region_scores": []
+}

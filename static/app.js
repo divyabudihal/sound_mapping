@@ -144,6 +144,7 @@ function toggleMute(model) {
   const wBtn = document.querySelector(`.stem-track[data-model="${model}"] .mute-btn`);
   if (wBtn) wBtn.classList.toggle('muted', stem.muted);
   applyGains();
+  atlasUpdate();
 }
 
 function toggleSolo(model) {
@@ -151,6 +152,21 @@ function toggleSolo(model) {
   const wBtn = document.querySelector(`.stem-track[data-model="${model}"] .solo-btn`);
   if (wBtn) wBtn.classList.toggle('soloed', stems[model].soloed);
   applyGains();
+  atlasUpdate();
+}
+
+// ── Atlas integration ─────────────────────────────────────────────────────────
+function getActiveStemIds() {
+  const solo = Object.values(stems).some(s => s.soloed);
+  return Object.entries(stems)
+    .filter(([, s]) => !s.muted && (!solo || s.soloed))
+    .map(([id]) => id);
+}
+
+function atlasUpdate() {
+  if (!window.analysisData || !window.getActiveAtlasData || !window.renderAtlas) return;
+  const data = window.getActiveAtlasData(getActiveStemIds(), window.analysisData.analysis);
+  window.renderAtlas(data);
 }
 
 // ── Waveform view: build offscreen waveform ───────────────────────────────────
@@ -608,11 +624,13 @@ function initHardwareView(available) {
 function animLoop() {
   const t = getCurrentTime();
 
+  // Always keep waveform progress bar current so switching back feels instant
+  const pct = duration > 0 ? Math.min(100, (t / duration) * 100) : 0;
+  progressFill.style.width = pct + '%';
+  currentTimeEl.textContent = formatTime(t);
+
   // Waveform view
   if (currentView === 'waveform') {
-    const pct = duration > 0 ? Math.min(100, (t / duration) * 100) : 0;
-    progressFill.style.width = pct + '%';
-    currentTimeEl.textContent = formatTime(t);
 
     for (const model of Object.keys(stems)) {
       const track = document.querySelector(`.stem-track[data-model="${model}"]`);
@@ -648,12 +666,24 @@ function switchView(view) {
   document.querySelectorAll('.view-btn').forEach(b => {
     b.classList.toggle('active', b.dataset.view === view);
   });
+  // Resize LCD canvas now that the hardware view is visible
+  if (view === 'hardware' && hwLcdCanvas) {
+    const strip = hwLcdCanvas.closest('.hw-lcd-strip');
+    const W = strip ? strip.clientWidth : 400;
+    hwLcdCanvas.width  = Math.max(200, W - 100);
+    hwLcdCanvas.height = 56;
+  }
 }
 
 // ── Init ──────────────────────────────────────────────────────────────────────
 async function init() {
-  const resp = await fetch('/api/stems');
-  const { stems: available } = await resp.json();
+  // Fetch stems list and analysis data in parallel
+  const [stemsResp, analysisResp] = await Promise.all([
+    fetch('/api/stems'),
+    fetch('/api/analysis').catch(() => null),
+  ]);
+  const { stems: available } = await stemsResp.json();
+  if (analysisResp) window.analysisData = await analysisResp.json();
 
   if (available.length === 0) {
     loadingBar.style.display = 'none';
@@ -686,6 +716,14 @@ async function init() {
   requestAnimationFrame(() => initHardwareView(available));
 
   rafId = requestAnimationFrame(animLoop);
+
+  // Init atlas pane
+  const atlasSvgEl = document.getElementById('atlas-svg');
+  if (atlasSvgEl && window.initAtlasRenderer) {
+    window.initAtlasRenderer(atlasSvgEl);
+    atlasUpdate();
+    if (window.startAtlasPulse) window.startAtlasPulse();
+  }
 }
 
 // ── Global events ─────────────────────────────────────────────────────────────

@@ -1060,3 +1060,201 @@ h1 {
   .hw-pad-icon { font-size: 16px; }
   .hw-logo { font-size: 22px; }
 }
+
+/* ══════════════════════════════════════════════════════════════
+   APP LAYOUT — two-column shell
+══════════════════════════════════════════════════════════════ */
+
+#app-layout {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+#left-panel {
+  flex: 1;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   ATLAS PANE
+══════════════════════════════════════════════════════════════ */
+
+#atlas-pane {
+  width: 360px;
+  flex-shrink: 0;
+  background: #080c10;
+  border-left: 1px solid #1a2530;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+/* ── Status bar ── */
+#atlas-status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14px;
+  height: 38px;
+  flex-shrink: 0;
+  background: #060a0d;
+  border-bottom: 1px solid #1a2530;
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 9px;
+  letter-spacing: 1.8px;
+  color: #4a6070;
+  text-transform: uppercase;
+  user-select: none;
+}
+
+#atlas-mode-label {
+  flex: 1;
+  color: #6a8090;
+}
+
+#atlas-stem-count {
+  flex: 0;
+  white-space: nowrap;
+  padding: 0 10px;
+  color: #4a6070;
+}
+
+#atlas-bpm {
+  flex: 0;
+  white-space: nowrap;
+  color: var(--orange);
+  opacity: 0.7;
+}
+
+/* ── SVG wrapper ── */
+#atlas-svg-wrap {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  min-height: 0;
+}
+
+#atlas-svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* ── Continent elements ── */
+.atlas-continent {
+  cursor: default;
+}
+
+.atlas-continent-label {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 7.5px;
+  font-weight: 700;
+  letter-spacing: 1.2px;
+  fill: #3a5060;
+  text-transform: uppercase;
+  pointer-events: none;
+  text-rendering: geometricPrecision;
+}
+
+/* ── City dots ── */
+.atlas-city-dot {
+  cursor: pointer;
+  transition: filter 0.2s;
+}
+
+.atlas-city-dot:hover {
+  filter: brightness(1.5) drop-shadow(0 0 3px currentColor);
+}
+
+.atlas-city-label {
+  text-rendering: geometricPrecision;
+  pointer-events: none;
+}
+
+.atlas-city-sublabel {
+  text-rendering: geometricPrecision;
+  pointer-events: none;
+}
+
+/* ── Detail panel ── */
+#atlas-detail-panel {
+  height: 120px;
+  flex-shrink: 0;
+  border-top: 1px solid #1a2530;
+  background: #060a0d;
+  padding: 12px 14px;
+  overflow: hidden;
+}
+
+#atlas-detail-inner {
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  height: 100%;
+}
+
+#atlas-detail-inner.visible {
+  opacity: 1;
+}
+
+.atlas-detail-hint {
+  font-family: 'SF Mono', monospace;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #2a3a44;
+  text-transform: uppercase;
+  margin-top: 28px;
+  text-align: center;
+}
+
+.atlas-detail-family {
+  font-family: 'SF Mono', monospace;
+  font-size: 8px;
+  letter-spacing: 2px;
+  color: var(--orange);
+  text-transform: uppercase;
+  margin-bottom: 3px;
+  opacity: 0.85;
+}
+
+.atlas-detail-style {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  letter-spacing: -0.3px;
+  margin-bottom: 4px;
+  line-height: 1.2;
+}
+
+.atlas-detail-prob {
+  font-family: 'SF Mono', monospace;
+  font-size: 10px;
+  color: #5a7080;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.atlas-detail-stems {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+}
+
+.atlas-detail-stem-chip {
+  font-family: 'SF Mono', monospace;
+  font-size: 7.5px;
+  letter-spacing: 0.8px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid currentColor;
+  text-transform: uppercase;
+  opacity: 0.85;
+}
+
+/* ── Responsive: hide atlas on narrow viewports ── */
+@media (max-width: 960px) {
+  #atlas-pane { display: none; }
+  #left-panel { overflow-y: auto; height: 100vh; }
+}

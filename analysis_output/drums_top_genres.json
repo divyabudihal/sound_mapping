@@ -1,0 +1,283 @@
+{
+  "stem": "drums",
+  "file": "stems/drums.mp3",
+  "top_classifications": [
+    {
+      "raw_label": "Electronic---House",
+      "parent_family": "Electronic",
+      "style": "House",
+      "parent_key": "electronic",
+      "style_key": "house",
+      "combined_key": "electronic---house",
+      "probability": 0.1896538883447647,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Techno",
+      "parent_family": "Electronic",
+      "style": "Techno",
+      "parent_key": "electronic",
+      "style_key": "techno",
+      "combined_key": "electronic---techno",
+      "probability": 0.11371994018554688,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Deep House",
+      "parent_family": "Electronic",
+      "style": "Deep House",
+      "parent_key": "electronic",
+      "style_key": "deep house",
+      "combined_key": "electronic---deep house",
+      "probability": 0.10913319885730743,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Tech House",
+      "parent_family": "Electronic",
+      "style": "Tech House",
+      "parent_key": "electronic",
+      "style_key": "tech house",
+      "combined_key": "electronic---tech house",
+      "probability": 0.0849396213889122,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Tribal House",
+      "parent_family": "Electronic",
+      "style": "Tribal House",
+      "parent_key": "electronic",
+      "style_key": "tribal house",
+      "combined_key": "electronic---tribal house",
+      "probability": 0.08082195371389389,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Funk / Soul---Funk",
+      "parent_family": "Funk / Soul",
+      "style": "Funk",
+      "parent_key": "funk / soul",
+      "style_key": "funk",
+      "combined_key": "funk / soul---funk",
+      "probability": 0.07514029741287231,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Broken Beat",
+      "parent_family": "Electronic",
+      "style": "Broken Beat",
+      "parent_key": "electronic",
+      "style_key": "broken beat",
+      "combined_key": "electronic---broken beat",
+      "probability": 0.06682274490594864,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Tribal",
+      "parent_family": "Electronic",
+      "style": "Tribal",
+      "parent_key": "electronic",
+      "style_key": "tribal",
+      "combined_key": "electronic---tribal",
+      "probability": 0.0523698627948761,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Latin",
+      "parent_family": "Electronic",
+      "style": "Latin",
+      "parent_key": "electronic",
+      "style_key": "latin",
+      "combined_key": "electronic---latin",
+      "probability": 0.05132070556282997,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Minimal Techno",
+      "parent_family": "Electronic",
+      "style": "Minimal Techno",
+      "parent_key": "electronic",
+      "style_key": "minimal techno",
+      "combined_key": "electronic---minimal techno",
+      "probability": 0.04789723455905914,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Future Jazz",
+      "parent_family": "Electronic",
+      "style": "Future Jazz",
+      "parent_key": "electronic",
+      "style_key": "future jazz",
+      "combined_key": "electronic---future jazz",
+      "probability": 0.04294867068529129,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    },
+    {
+      "raw_label": "Electronic---Jazzdance",
+      "parent_family": "Electronic",
+      "style": "Jazzdance",
+      "parent_key": "electronic",
+      "style_key": "jazzdance",
+      "combined_key": "electronic---jazzdance",
+      "probability": 0.039836183190345764,
+      "region": "",
+      "subregion": "",
+      "notes": ""
+    }
+  ],
+  "style_totals": [
+    {
+      "style": "House",
+      "total_probability": 0.1896538883447647,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.1896538883447647
+        }
+      ]
+    },
+    {
+      "style": "Techno",
+      "total_probability": 0.11371994018554688,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.11371994018554688
+        }
+      ]
+    },
+    {
+      "style": "Deep House",
+      "total_probability": 0.10913319885730743,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.10913319885730743
+        }
+      ]
+    },
+    {
+      "style": "Tech House",
+      "total_probability": 0.0849396213889122,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.0849396213889122
+        }
+      ]
+    },
+    {
+      "style": "Tribal House",
+      "total_probability": 0.08082195371389389,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.08082195371389389
+        }
+      ]
+    },
+    {
+      "style": "Funk",
+      "total_probability": 0.07514029741287231,
+      "parent_breakdown": [
+        {
+          "parent_family": "Funk / Soul",
+          "probability": 0.07514029741287231
+        }
+      ]
+    },
+    {
+      "style": "Broken Beat",
+      "total_probability": 0.06682274490594864,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.06682274490594864
+        }
+      ]
+    },
+    {
+      "style": "Tribal",
+      "total_probability": 0.0523698627948761,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.0523698627948761
+        }
+      ]
+    },
+    {
+      "style": "Latin",
+      "total_probability": 0.05132070556282997,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.05132070556282997
+        }
+      ]
+    },
+    {
+      "style": "Minimal Techno",
+      "total_probability": 0.04789723455905914,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.04789723455905914
+        }
+      ]
+    },
+    {
+      "style": "Future Jazz",
+      "total_probability": 0.04294867068529129,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.04294867068529129
+        }
+      ]
+    },
+    {
+      "style": "Jazzdance",
+      "total_probability": 0.039836183190345764,
+      "parent_breakdown": [
+        {
+          "parent_family": "Electronic",
+          "probability": 0.039836183190345764
+        }
+      ]
+    }
+  ],
+  "parent_totals": [
+    {
+      "parent_family": "Electronic",
+      "total_probability": 0.879464004188776
+    },
+    {
+      "parent_family": "Funk / Soul",
+      "total_probability": 0.07514029741287231
+    }
+  ],
+  "region_scores": []
+}

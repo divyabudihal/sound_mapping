@@ -1,2 +1,15 @@
 flask>=3.0.0
 requests>=2.31.0
+numpy>=1.24
+pandas>=2.0
+scipy>=1.10
+soundfile>=0.12
+mutagen>=1.47
+
+# Essentia is the core dependency. Install one of the following depending on your environment:
+# Option A: if pip wheel is available for your Python/OS
+essentia-tensorflow>=2.1b6.dev1110
+
+# Option B: if pip install fails, install Essentia from source with TensorFlow support:
+# https://essentia.upf.edu/installing.html
+# and omit the pip line above from requirements.txt
