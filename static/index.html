@@ -9,20 +9,26 @@
 <body>
 
 <header>
-  <div class="title-block">
-    <h1>Zombie</h1>
+  <div class="header-top">
+    <div class="title-block">
+      <h1>Zombie</h1>
+    </div>
+    <nav class="view-toggle" id="view-toggle" style="display:none">
+      <button class="view-btn active" data-view="waveform">Waveform</button>
+      <button class="view-btn" data-view="hardware">Hardware</button>
+    </nav>
   </div>
   <p class="artist">Fela Kuti &amp; Africa 70</p>
   <p class="subtitle">Stem Explorer — AudioShake AI Separation</p>
 </header>
 
-<!-- Setup instructions (shown when stems not yet extracted) -->
+<!-- Setup instructions -->
 <div id="setup-message" style="display:none">
   <h2>Stems not found</h2>
   <p>Run the extractor script first to separate the song into individual stems:</p>
-  <code>python extract_stems.py</code>
+  <code>python3 extract_stems.py</code>
   <p>This uploads to AudioShake and downloads vocals, drums, bass, horns, guitar, and keys. Takes a few minutes. Then:</p>
-  <code>python app.py</code>
+  <code>python3 app.py</code>
   <p style="margin-top:24px;color:#555">Then refresh this page.</p>
 </div>
 
@@ -36,22 +42,163 @@
   </div>
 </div>
 
-<!-- Master controls (hidden until loaded) -->
-<div id="master-controls" style="display:none">
-  <button id="play-btn" title="Play / Pause (Space)">▶</button>
-  <div class="timeline">
-    <div id="progress-bar">
-      <div id="progress-fill"></div>
-    </div>
-    <div class="time-row">
-      <span id="current-time">0:00</span>
-      <span id="total-time">0:00</span>
+<!-- ═══════════════════════════════════ WAVEFORM VIEW ═══════════════════════════════════ -->
+<div id="waveform-view" style="display:none">
+
+  <div id="master-controls">
+    <button id="play-btn" title="Play / Pause (Space)">▶</button>
+    <div class="timeline">
+      <div id="progress-bar">
+        <div id="progress-fill"></div>
+      </div>
+      <div class="time-row">
+        <span id="current-time">0:00</span>
+        <span id="total-time">0:00</span>
+      </div>
     </div>
   </div>
+
+  <div id="stems-container"></div>
+
 </div>
 
-<!-- Stem tracks injected here -->
-<div id="stems-container" style="display:none"></div>
+<!-- ═══════════════════════════════════ HARDWARE VIEW ════════════════════════════════════ -->
+<div id="hardware-view" style="display:none">
+  <div class="hw-scene">
+    <div class="hw-device">
+
+      <!-- Cable tab at top -->
+      <div class="hw-cable-tab">
+        <span class="hw-port-label">INPUT</span>
+        <div class="hw-cable-plug"></div>
+        <span class="hw-port-label">OUTPUT</span>
+      </div>
+
+      <!-- Brand plate -->
+      <div class="hw-plate">
+        <div class="hw-brand-block">
+          <div class="hw-logo">ZOMBIE</div>
+          <div class="hw-model">SUPERTONE</div>
+          <div class="hw-tagline">ORIGINAL LAYERING MACHINE</div>
+        </div>
+        <div class="hw-speaker-grille">
+          <div class="hw-grille-holes"></div>
+        </div>
+      </div>
+
+      <!-- LCD display strip -->
+      <div class="hw-lcd-strip">
+        <div class="hw-lcd-icons" id="hw-lcd-icons">
+          <!-- stem activity icons drawn by JS -->
+        </div>
+        <canvas id="hw-lcd-canvas"></canvas>
+        <div class="hw-lcd-digit" id="hw-lcd-digit">0:00</div>
+      </div>
+
+      <!-- Controls body -->
+      <div class="hw-body">
+
+        <!-- Left column -->
+        <div class="hw-col-left">
+          <div class="hw-vol-section">
+            <canvas class="hw-knob-canvas" id="hw-master-knob" width="60" height="60"
+                    title="Master Volume" data-value="1"></canvas>
+            <span class="hw-ctrl-label">VOLUME</span>
+          </div>
+          <div class="hw-mode-row-left">
+            <button class="hw-sm-btn hw-sm-lit" id="hw-live-btn">LIVE</button>
+            <button class="hw-sm-btn">EDIT</button>
+          </div>
+          <div class="hw-level-row">
+            <span class="hw-ctrl-label">LEVEL</span>
+          </div>
+          <div class="hw-fader-wrap">
+            <div class="hw-fader-track">
+              <div class="hw-fader-fill" id="hw-fader-fill"></div>
+              <div class="hw-fader-thumb" id="hw-fader-thumb"></div>
+            </div>
+          </div>
+          <button class="hw-sq-btn" id="hw-keys-btn">
+            <span class="hw-sq-icon">⌨</span>
+            <span class="hw-sq-label">KEYS</span>
+          </button>
+        </div>
+
+        <!-- Center: pad grid + mode buttons -->
+        <div class="hw-col-center">
+          <div class="hw-pad-grid" id="hw-pad-grid">
+            <!-- 6 pads injected by JS -->
+          </div>
+          <div class="hw-fn-row">
+            <button class="hw-fn-btn" id="hw-btn-mute">MUTE</button>
+            <button class="hw-fn-btn" id="hw-btn-solo">SOLO</button>
+            <button class="hw-fn-btn" id="hw-btn-pitch">PITCH</button>
+            <button class="hw-fn-btn" id="hw-btn-fx">→ FX</button>
+          </div>
+          <div class="hw-fn-row">
+            <button class="hw-fn-btn" id="hw-btn-enter">ENTER</button>
+            <button class="hw-transport-btn hw-rec-btn" id="hw-rec-btn">● REC</button>
+            <button class="hw-transport-btn hw-play-btn orange" id="hw-play-btn">▶ PLAY</button>
+          </div>
+        </div>
+
+        <!-- Right column -->
+        <div class="hw-col-right">
+          <div class="hw-mini-knobs">
+            <div class="hw-mini-knob-wrap">
+              <canvas class="hw-knob-canvas hw-knob-mini" data-value="0.5"
+                      id="hw-bpm-knob" width="40" height="40"></canvas>
+              <span class="hw-ctrl-label">BPM</span>
+            </div>
+            <div class="hw-mini-knob-wrap">
+              <canvas class="hw-knob-canvas hw-knob-mini" data-value="0.5"
+                      id="hw-metro-knob" width="40" height="40"></canvas>
+              <span class="hw-ctrl-label">METRO</span>
+            </div>
+          </div>
+          <div class="hw-right-fns">
+            <div class="hw-right-fn-pair">
+              <button class="hw-fn-btn">SAMPLE</button>
+              <button class="hw-fn-btn hw-orange-lit">TIMING</button>
+            </div>
+            <div class="hw-right-fn-pair">
+              <button class="hw-fn-btn">CHOP</button>
+              <button class="hw-fn-btn">CORRECT</button>
+            </div>
+            <div class="hw-right-fn-pair">
+              <button class="hw-fn-btn">OUTPUT</button>
+              <button class="hw-fn-btn">ERASE</button>
+            </div>
+            <div class="hw-right-fn-pair">
+              <button class="hw-fn-btn">FX</button>
+              <button class="hw-fn-btn">SYSTEM</button>
+            </div>
+          </div>
+          <div class="hw-plusminus">
+            <button class="hw-pm-btn">−</button>
+            <button class="hw-pm-btn">+</button>
+          </div>
+        </div>
+
+      </div><!-- /.hw-body -->
+
+      <!-- Bottom strip -->
+      <div class="hw-bottom">
+        <button class="hw-sq-btn hw-shift-btn">
+          <span class="hw-sq-label">SHIFT</span>
+        </button>
+        <div class="hw-screws">
+          <div class="hw-screw"></div>
+          <div class="hw-screw"></div>
+        </div>
+        <button class="hw-sq-btn hw-red-btn">
+          <span class="hw-sq-label">●</span>
+        </button>
+      </div>
+
+    </div><!-- /.hw-device -->
+  </div><!-- /.hw-scene -->
+</div><!-- /#hardware-view -->
 
 <script src="/static/app.js"></script>
 </body>

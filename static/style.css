@@ -328,6 +328,46 @@ h1 {
   opacity: 0.6;
 }
 
+/* ── VIEW TOGGLE ── */
+.header-top {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.view-toggle {
+  display: flex;
+  gap: 4px;
+  padding: 3px;
+  background: var(--surface2);
+  border-radius: 8px;
+  border: 1px solid var(--border);
+  margin-bottom: 2px;
+}
+
+.view-btn {
+  padding: 6px 16px;
+  border: none;
+  border-radius: 5px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.view-btn.active {
+  background: var(--surface);
+  color: var(--text);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+}
+
+.view-btn:hover:not(.active) { color: var(--text); }
+
 /* ── RESPONSIVE ── */
 @media (max-width: 640px) {
   header { padding: 24px 20px 16px; }
@@ -336,4 +376,687 @@ h1 {
   #stems-container { padding: 0 12px 32px; }
   .stem-track { grid-template-columns: 140px 1fr; }
   .stem-label { font-size: 11px; }
+}
+
+/* ══════════════════════════════════════════════════════════════
+   HARDWARE VIEW
+══════════════════════════════════════════════════════════════ */
+
+:root {
+  --hw-body:     #f0ece0;
+  --hw-surface:  #e6e2d6;
+  --hw-deep:     #d4d0c4;
+  --hw-shadow:   #b0ac9e;
+  --hw-dark:     #2a2a28;
+  --hw-orange:   #e84c1e;
+  --hw-orange-d: #c43a10;
+  --hw-lcd-bg:   #192e19;
+  --hw-lcd-fg:   #52ff7a;
+  --hw-lcd-dim:  #1e4a1e;
+  --hw-led-on:   #52ff7a;
+  --hw-btn-h:    32px;
+}
+
+.hw-scene {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  padding: 40px 20px 60px;
+  min-height: calc(100vh - 140px);
+  background: radial-gradient(ellipse at 50% 30%, #1a1008 0%, #0d0d0d 70%);
+}
+
+/* ── Device shell ── */
+.hw-device {
+  width: 100%;
+  max-width: 580px;
+  background: linear-gradient(160deg, #f8f4e8 0%, #e8e4d6 100%);
+  border-radius: 16px 16px 10px 10px;
+  box-shadow:
+    0 2px 0 #fff8 inset,
+    0 -1px 0 #0003 inset,
+    0 24px 64px rgba(0,0,0,0.55),
+    0 4px 12px rgba(0,0,0,0.3);
+  overflow: visible;
+  position: relative;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+}
+
+/* ── Cable tab ── */
+.hw-cable-tab {
+  position: absolute;
+  top: -22px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  background: var(--hw-orange);
+  border-radius: 6px 6px 0 0;
+  padding: 4px 20px 8px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: rgba(255,255,255,0.85);
+}
+
+.hw-cable-plug {
+  width: 28px;
+  height: 14px;
+  background: var(--hw-dark);
+  border-radius: 3px;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.5);
+}
+
+/* ── Brand plate ── */
+.hw-plate {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px 12px;
+  border-bottom: 1px solid #d0ccbf;
+}
+
+.hw-logo {
+  font-size: 28px;
+  font-weight: 900;
+  letter-spacing: -1px;
+  color: var(--hw-dark);
+  line-height: 1;
+  font-style: italic;
+}
+
+.hw-model {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--hw-orange);
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.hw-tagline {
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: #888;
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+/* Speaker grille */
+.hw-speaker-grille {
+  width: 72px;
+  height: 56px;
+  background:
+    repeating-linear-gradient(
+      90deg,
+      #c8c4b4 0px,
+      #c8c4b4 1px,
+      transparent 1px,
+      transparent 6px
+    );
+  border-radius: 4px;
+  border: 1px solid #bab6a8;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.2);
+}
+
+/* ── LCD strip ── */
+.hw-lcd-strip {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  background: var(--hw-lcd-bg);
+  border-top: 2px solid #111;
+  border-bottom: 2px solid #111;
+  padding: 6px 12px;
+  min-height: 68px;
+  position: relative;
+  overflow: hidden;
+}
+
+.hw-lcd-strip::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    180deg,
+    rgba(0,0,0,0.12) 0px,
+    rgba(0,0,0,0.12) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+  pointer-events: none;
+}
+
+#hw-lcd-canvas {
+  flex: 1;
+  height: 56px;
+  display: block;
+  image-rendering: pixelated;
+}
+
+.hw-lcd-digit {
+  font-family: 'Courier New', monospace;
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--hw-lcd-fg);
+  letter-spacing: 2px;
+  text-shadow: 0 0 8px var(--hw-lcd-fg);
+  min-width: 72px;
+  text-align: right;
+  flex-shrink: 0;
+}
+
+.hw-lcd-icons {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-right: 10px;
+  flex-shrink: 0;
+}
+
+.hw-lcd-icon-row {
+  display: flex;
+  gap: 5px;
+}
+
+.hw-lcd-icon {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--hw-lcd-dim);
+  transition: background 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+
+.hw-lcd-icon.active {
+  background: var(--hw-lcd-fg);
+  box-shadow: 0 0 5px var(--hw-lcd-fg);
+}
+
+/* ── Controls body ── */
+.hw-body {
+  display: grid;
+  grid-template-columns: 80px 1fr 100px;
+  gap: 0;
+  padding: 12px 10px 10px;
+}
+
+/* ── Left column ── */
+.hw-col-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px 4px 4px;
+  border-right: 1px solid #d0ccbf;
+}
+
+.hw-vol-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.hw-ctrl-label {
+  font-size: 8px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #666;
+  text-transform: uppercase;
+}
+
+.hw-mode-row-left {
+  display: flex;
+  gap: 4px;
+}
+
+.hw-level-row {
+  width: 100%;
+  text-align: center;
+  padding-top: 4px;
+}
+
+/* Fader */
+.hw-fader-wrap {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: stretch;
+  padding: 4px 0;
+}
+
+.hw-fader-track {
+  width: 14px;
+  background: #c8c4b4;
+  border-radius: 7px;
+  border: 1px solid #b0ac9e;
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.25);
+  position: relative;
+  cursor: pointer;
+  min-height: 80px;
+}
+
+.hw-fader-fill {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: linear-gradient(180deg, var(--hw-orange) 0%, var(--hw-orange-d) 100%);
+  border-radius: 0 0 7px 7px;
+  transition: height 0.1s;
+}
+
+.hw-fader-thumb {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 28px;
+  height: 14px;
+  background: linear-gradient(180deg, #f0ece0 0%, #d8d4c8 100%);
+  border-radius: 3px;
+  border: 1px solid #a8a49c;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.3), 0 1px 0 #fff8 inset;
+  cursor: grab;
+  z-index: 2;
+}
+
+.hw-sq-btn {
+  width: 100%;
+  background: linear-gradient(180deg, #ece8dc 0%, #d8d4c8 100%);
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 3px 0 var(--hw-shadow), 0 3px 6px rgba(0,0,0,0.15);
+  padding: 6px 4px 4px;
+  cursor: pointer;
+  text-align: center;
+  transition: transform 0.06s, box-shadow 0.06s;
+}
+
+.hw-sq-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--hw-shadow), 0 1px 3px rgba(0,0,0,0.15);
+}
+
+.hw-sq-icon { font-size: 14px; display: block; }
+.hw-sq-label { font-size: 8px; font-weight: 700; letter-spacing: 1px; color: #555; text-transform: uppercase; }
+
+/* ── Center column ── */
+.hw-col-center {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 8px;
+}
+
+/* ── Pad grid ── */
+.hw-pad-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.hw-pad {
+  position: relative;
+  background: linear-gradient(160deg, #ece8dc 0%, #d8d4c6 100%);
+  border-radius: 6px;
+  box-shadow:
+    0 4px 0 var(--hw-shadow),
+    0 4px 8px rgba(0,0,0,0.2),
+    0 1px 0 rgba(255,255,255,0.7) inset;
+  padding: 10px 8px 8px;
+  cursor: pointer;
+  transition: transform 0.06s, box-shadow 0.06s, background 0.15s;
+  user-select: none;
+  min-height: 80px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+.hw-pad:active,
+.hw-pad.pressed {
+  transform: translateY(3px);
+  box-shadow: 0 1px 0 var(--hw-shadow), 0 1px 3px rgba(0,0,0,0.2);
+}
+
+.hw-pad.active {
+  background: linear-gradient(160deg, #f5f0e4 0%, #e8e4d6 100%);
+}
+
+.hw-pad.muted {
+  opacity: 0.55;
+}
+
+/* LED indicator */
+.hw-pad-led {
+  position: absolute;
+  top: 7px;
+  right: 8px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #555;
+  box-shadow: inset 0 1px 2px rgba(0,0,0,0.4);
+  transition: background 0.15s, box-shadow 0.15s;
+}
+
+.hw-pad.active .hw-pad-led {
+  background: var(--pad-color, #52ff7a);
+  box-shadow: 0 0 6px var(--pad-color, #52ff7a), 0 0 2px #fff inset;
+}
+
+/* Pad number badge */
+.hw-pad-num {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 9px;
+  font-weight: 700;
+  color: #999;
+  letter-spacing: 0;
+}
+
+.hw-pad-icon {
+  font-size: 20px;
+  line-height: 1;
+}
+
+.hw-pad-name {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #444;
+  text-transform: uppercase;
+}
+
+.hw-pad-sublabel {
+  font-size: 7px;
+  letter-spacing: 0.5px;
+  color: #999;
+  text-transform: uppercase;
+}
+
+/* Per-pad volume dot row */
+.hw-pad-vol-dots {
+  display: flex;
+  gap: 2px;
+  margin-top: 2px;
+}
+
+.hw-vol-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #c0bcb0;
+  transition: background 0.1s;
+}
+
+.hw-vol-dot.lit {
+  background: var(--pad-color, var(--hw-orange));
+}
+
+/* ── Function buttons row ── */
+.hw-fn-row {
+  display: flex;
+  gap: 6px;
+}
+
+.hw-fn-btn {
+  flex: 1;
+  height: var(--hw-btn-h);
+  background: linear-gradient(180deg, #dedad0 0%, #cbc8bc 100%);
+  border: none;
+  border-radius: 4px;
+  box-shadow: 0 3px 0 var(--hw-shadow), 0 3px 5px rgba(0,0,0,0.12);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #444;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.06s, box-shadow 0.06s, background 0.12s;
+}
+
+.hw-fn-btn:active,
+.hw-fn-btn.lit {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--hw-shadow);
+  background: linear-gradient(180deg, #d0ccbf 0%, #c0bcaf 100%);
+}
+
+.hw-fn-btn.mode-active {
+  background: linear-gradient(180deg, #e84c1e 0%, #c43a10 100%);
+  color: #fff;
+  box-shadow: 0 3px 0 #8a2008, 0 0 8px rgba(232,76,30,0.4);
+}
+
+.hw-fn-btn.mode-active:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #8a2008;
+}
+
+/* Transport buttons */
+.hw-transport-btn {
+  flex: 1;
+  height: var(--hw-btn-h);
+  border: none;
+  border-radius: 4px;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.06s, box-shadow 0.06s;
+}
+
+.hw-rec-btn {
+  background: linear-gradient(180deg, #c83030 0%, #a02020 100%);
+  color: #fff;
+  box-shadow: 0 3px 0 #601010, 0 3px 8px rgba(200,48,48,0.35);
+}
+
+.hw-rec-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #601010;
+}
+
+.hw-play-btn.orange {
+  background: linear-gradient(180deg, #f06020 0%, #c84010 100%);
+  color: #fff;
+  box-shadow: 0 3px 0 #7a2008, 0 3px 8px rgba(240,96,32,0.45);
+}
+
+.hw-play-btn.orange:active,
+.hw-play-btn.orange.playing {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 #7a2008;
+}
+
+/* ── Right column ── */
+.hw-col-right {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 4px 4px 4px 8px;
+  border-left: 1px solid #d0ccbf;
+  align-items: center;
+}
+
+.hw-mini-knobs {
+  display: flex;
+  gap: 8px;
+}
+
+.hw-mini-knob-wrap {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 3px;
+}
+
+.hw-right-fns {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  width: 100%;
+}
+
+.hw-right-fn-pair {
+  display: flex;
+  gap: 4px;
+}
+
+.hw-right-fn-pair .hw-fn-btn {
+  font-size: 7px;
+  padding: 0 2px;
+}
+
+.hw-orange-lit {
+  background: linear-gradient(180deg, #e84c1e 0%, #c43a10 100%) !important;
+  color: #fff !important;
+  box-shadow: 0 3px 0 #8a2008 !important;
+}
+
+.hw-plusminus {
+  display: flex;
+  gap: 6px;
+  margin-top: auto;
+}
+
+.hw-pm-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  border: none;
+  background: linear-gradient(180deg, #dedad0 0%, #cbc8bc 100%);
+  box-shadow: 0 3px 0 var(--hw-shadow);
+  font-size: 16px;
+  font-weight: 300;
+  color: #444;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.06s, box-shadow 0.06s;
+}
+
+.hw-pm-btn:active {
+  transform: translateY(2px);
+  box-shadow: 0 1px 0 var(--hw-shadow);
+}
+
+/* ── Shared: small buttons ── */
+.hw-sm-btn {
+  height: 22px;
+  padding: 0 8px;
+  border: none;
+  border-radius: 3px;
+  background: linear-gradient(180deg, #dedad0 0%, #cbc8bc 100%);
+  box-shadow: 0 2px 0 var(--hw-shadow);
+  font-size: 8px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #555;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.06s, box-shadow 0.06s;
+}
+
+.hw-sm-btn::before {
+  content: '';
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #888;
+}
+
+.hw-sm-btn.hw-sm-lit::before {
+  background: var(--hw-orange);
+  box-shadow: 0 0 4px var(--hw-orange);
+}
+
+.hw-sm-btn:active {
+  transform: translateY(1px);
+  box-shadow: 0 1px 0 var(--hw-shadow);
+}
+
+/* ── Knob canvas ── */
+.hw-knob-canvas {
+  cursor: ns-resize;
+  display: block;
+}
+
+/* ── Bottom strip ── */
+.hw-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 8px 16px 14px;
+  border-top: 1px solid #d0ccbf;
+}
+
+.hw-shift-btn { width: 52px; }
+.hw-red-btn {
+  width: 32px;
+  background: linear-gradient(180deg, #c83030 0%, #a02020 100%) !important;
+  box-shadow: 0 3px 0 #601010 !important;
+}
+.hw-red-btn .hw-sq-label { color: #fff !important; font-size: 14px; }
+
+.hw-screws {
+  display: flex;
+  gap: 60px;
+}
+
+.hw-screw {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #e0dcce, #a8a49c);
+  box-shadow: 0 1px 2px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+  position: relative;
+}
+
+.hw-screw::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 15%;
+  right: 15%;
+  height: 1.5px;
+  background: #888;
+  transform: translateY(-50%) rotate(45deg);
+}
+
+/* ── Scanline overlay on hardware ── */
+.hw-device::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 16px 16px 10px 10px;
+  background: repeating-linear-gradient(
+    180deg,
+    transparent 0px,
+    transparent 2px,
+    rgba(0,0,0,0.025) 2px,
+    rgba(0,0,0,0.025) 4px
+  );
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── Hardware responsive ── */
+@media (max-width: 620px) {
+  .hw-body { grid-template-columns: 64px 1fr 80px; }
+  .hw-pad { min-height: 64px; padding: 8px 6px 6px; }
+  .hw-pad-icon { font-size: 16px; }
+  .hw-logo { font-size: 22px; }
 }
