@@ -3,7 +3,7 @@ const STEM_CONFIG = {
   vocals: { label: 'Vocals & Choir', short: 'VOCALS', color: '#FF6B35', emoji: '🎤', num: 1 },
   drums:  { label: 'Drums',          short: 'DRUMS',  color: '#FFD700', emoji: '🥁', num: 2 },
   bass:   { label: 'Bass',           short: 'BASS',   color: '#E040FB', emoji: '🔊', num: 3 },
-  wind:   { label: 'Horns & Wind',   short: 'HORNS',  color: '#00E5FF', emoji: '🎺', num: 4 },
+  wind:   { label: 'Horns',   short: 'HORNS',  color: '#00E5FF', emoji: '🎺', num: 4 },
   guitar: { label: 'Guitar',         short: 'GUITAR', color: '#69F0AE', emoji: '🎸', num: 5 },
   keys:   { label: 'Keys',           short: 'KEYS',   color: '#FF4081', emoji: '🎹', num: 6 },
 };

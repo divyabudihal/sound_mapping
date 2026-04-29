@@ -448,7 +448,7 @@ function appendCityLabel(grp, city, cx, cy, r, dx, dy) {
     x: lx, y: nameY,
     'dominant-baseline': 'central',
     'text-anchor': anchor,
-    'font-family': "'SF Mono', monospace",
+    'font-family': "'Jaini', monospace",
     'font-size': 9.5,
     fill: '#cec8a8',
   });
@@ -459,7 +459,7 @@ function appendCityLabel(grp, city, cx, cy, r, dx, dy) {
     class: 'atlas-city-sublabel',
     x: lx, y: pctY,
     'text-anchor': anchor,
-    'font-family': "'SF Mono', monospace",
+    'font-family': "'Jaini', monospace",
     'font-size': 8,
     fill: '#788868',
   });

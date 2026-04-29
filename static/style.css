@@ -1,4 +1,30 @@
-:root {
+@font-face {
+  font-family: 'Jaini';
+  src: url('/static/fonts/jaini.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Nekta';
+  src: url('/static/fonts/jaini.regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* CSS HEX
+--dark-emerald: #226345ff;
+--blue-green: #3A92B7ff;
+--golden-glow: #F0D833ff;
+--dusty-mauve: #B44252ff;
+--brown-red: #A22B3Bff;
+--white-smoke: #F2F3F1ff;
+--graphite: #303330ff;
+--dusk-blue: #355074ff; */
+
+/* :root {
   --bg: #0d0d0d;
   --surface: #1a1a1a;
   --surface2: #242424;
@@ -7,6 +33,17 @@
   --muted: #888;
   --orange: #ff6b00;
   --orange-dim: rgba(255, 107, 0, 0.12);
+} */
+
+:root {
+  --bg: #0d0d0d;
+  --surface: #A22B3Bff;
+  --surface2: #226345ff;
+  --border: #F0D833ff;
+  --text: #F2F3F1ff;
+  --muted:  #3A92B7ff;
+  --orange: #B44252ff;
+  --orange-dim: #3A92B7ff;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -188,6 +225,8 @@ h1 {
 
 /* ── STEM TRACKS ── */
 #stems-container {
+  overflow-y: auto;
+  max-height: calc(100vh - 200px); /* adjust 200px to match your header + controls height */
   padding: 0 24px 40px;
 }
 
@@ -388,12 +427,12 @@ h1 {
   --hw-deep:     #d4d0c4;
   --hw-shadow:   #b0ac9e;
   --hw-dark:     #2a2a28;
-  --hw-orange:   #e84c1e;
-  --hw-orange-d: #c43a10;
+  --hw-orange:   #A22B3Bff;
+  --hw-orange-d: #B44252ff;
   --hw-lcd-bg:   #192e19;
-  --hw-lcd-fg:   #52ff7a;
-  --hw-lcd-dim:  #1e4a1e;
-  --hw-led-on:   #52ff7a;
+  --hw-lcd-fg:   #3A92B7ff;
+  --hw-lcd-dim:  #226345ff;
+  --hw-led-on:   #3A92B7ff;
   --hw-btn-h:    32px;
 }
 
@@ -1072,8 +1111,8 @@ h1 {
 }
 
 #left-panel {
-  flex: 1;
-  overflow-y: auto;
+  flex: 1 1 50%;
+  overflow-y: hidden;
   min-width: 0;
 }
 
@@ -1082,10 +1121,11 @@ h1 {
 ══════════════════════════════════════════════════════════════ */
 
 #atlas-pane {
-  width: 360px;
+  flex: 1 1 50%;
+  width: auto;
   flex-shrink: 0;
-  background: #080c10;
-  border-left: 1px solid #1a2530;
+  background: #0d0d0d;
+  border-left: 1px solid #3A92B7ff;
   display: flex;
   flex-direction: column;
   position: relative;
@@ -1100,9 +1140,9 @@ h1 {
   padding: 0 14px;
   height: 38px;
   flex-shrink: 0;
-  background: #060a0d;
-  border-bottom: 1px solid #1a2530;
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  background: #0d0d0d;
+  border-bottom: 1px solid #F0D833ff;
+  font-family: 'Nekta', 'Fira Code', monospace;
   font-size: 9px;
   letter-spacing: 1.8px;
   color: #4a6070;
@@ -1149,7 +1189,7 @@ h1 {
 }
 
 .atlas-continent-label {
-  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-family: 'Jaini', 'Fira Code', monospace;
   font-size: 7.5px;
   font-weight: 700;
   letter-spacing: 1.2px;
@@ -1200,7 +1240,7 @@ h1 {
 }
 
 .atlas-detail-hint {
-  font-family: 'SF Mono', monospace;
+  font-family: 'Jaini', monospace;
   font-size: 9px;
   letter-spacing: 1.5px;
   color: #2a3a44;
@@ -1210,7 +1250,7 @@ h1 {
 }
 
 .atlas-detail-family {
-  font-family: 'SF Mono', monospace;
+  font-family: 'Jaini', monospace;
   font-size: 8px;
   letter-spacing: 2px;
   color: var(--orange);
@@ -1229,7 +1269,7 @@ h1 {
 }
 
 .atlas-detail-prob {
-  font-family: 'SF Mono', monospace;
+  font-family: 'Jaini', monospace;
   font-size: 10px;
   color: #5a7080;
   margin-bottom: 8px;
@@ -1243,7 +1283,7 @@ h1 {
 }
 
 .atlas-detail-stem-chip {
-  font-family: 'SF Mono', monospace;
+  font-family: 'Jaini', monospace;
   font-size: 7.5px;
   letter-spacing: 0.8px;
   padding: 2px 7px;
@@ -1256,5 +1296,5 @@ h1 {
 /* ── Responsive: hide atlas on narrow viewports ── */
 @media (max-width: 960px) {
   #atlas-pane { display: none; }
-  #left-panel { overflow-y: auto; height: 100vh; }
+  #left-panel { flex: 1 1 100%; overflow-y: auto; height: 100vh; }
 }
